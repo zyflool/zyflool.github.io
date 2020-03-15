@@ -54,10 +54,10 @@
 <meta property="og:site_name" content="小凡同学的博客">
 <meta property="og:description" content="简述在程序中出现的错误（无论是编译时还是运行时出现的），称为异常(Exception)。Java使用一种称为异常处理的错误捕获机制来处理这些异常。 和Java 的其他任何对象一样，异常需要用new在内存堆里创建实例。在所有标准异常中， 存在着两个构建器：第一个是默认构建器，第二个则需使用一个字串自变量，使我们能在异常里置入相关信息： new RuntimeException(&amp;quot;Null">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;images2017.cnblogs.com&#x2F;blog&#x2F;858860&#x2F;201709&#x2F;858860-20170911125844719-1230755033.png">
-<meta property="og:updated_time" content="2020-03-07T11:41:20.665Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;15&#x2F;J4kdx3URuL12wos.png">
+<meta property="og:updated_time" content="2020-03-15T07:50:40.437Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;images2017.cnblogs.com&#x2F;blog&#x2F;858860&#x2F;201709&#x2F;858860-20170911125844719-1230755033.png">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;03&#x2F;15&#x2F;J4kdx3URuL12wos.png">
 
 <link rel="canonical" href="http://zyflool.github.io/2020/03/07/Java%E5%9F%BA%E7%A1%80%E2%80%94%E2%80%94%E5%BC%82%E5%B8%B8/">
 
@@ -207,10 +207,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-07 18:25:08 / 修改时间：19:41:20" itemprop="dateCreated datePublished" datetime="2020-03-07T18:25:08+08:00">2020-03-07</time>
+              <time title="创建时间：2020-03-07 18:25:08" itemprop="dateCreated datePublished" datetime="2020-03-07T18:25:08+08:00">2020-03-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-15 15:50:40" itemprop="dateModified" datetime="2020-03-15T15:50:40+08:00">2020-03-15</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -239,10 +245,12 @@
 <p><code>new RuntimeException(&quot;Null Exception&quot;)</code></p>
 <p>其中的字符串可用各种方法提取出来。</p>
 <p>关键字throw会首先执行new表达式，创建一个不在程序常规执行范围之内的对象。随后，对象实例会从方法中返回。通过抛出一个异常，就可以从原来的作用域中退出。</p>
+<a id="more"></a>
+
 <ul>
 <li>异常的分类</li>
 </ul>
-<p><img src="https://images2017.cnblogs.com/blog/858860/201709/858860-20170911125844719-1230755033.png" alt="异常的分类"></p>
+<p><img src="https://i.loli.net/2020/03/15/J4kdx3URuL12wos.png" alt="异常的分类"></p>
 <p>Java标准库内建了一些通用的异常，这些类以Throwable为顶层父类。Throwable又派生出Error类和Exception类。</p>
 <p>Java语言规范将派生于Error类或RuntimeException类的所有异常称为非受查(unchecked)异常，所有其他的异常称为受查(checked)异常。</p>
 <h4 id="捕获异常"><a href="#捕获异常" class="headerlink" title="捕获异常"></a>捕获异常</h4><p>针对想捕获的每种异常类型，都必须有一个相应的异常控制器。异常控制器紧接在try块后面，且用catch关键字标记。格式如下所示：</p>
