@@ -210,7 +210,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-20 17:41:40" itemprop="dateModified" datetime="2020-06-20T17:41:40+08:00">2020-06-20</time>
+                <time title="修改时间：2020-06-20 18:11:11" itemprop="dateModified" datetime="2020-06-20T18:11:11+08:00">2020-06-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -283,8 +283,59 @@
 <li>最优化原理(最优子结构性质)最优化原 理可这样阐述：一个最优化策略具有这样的性质，不论过去状态和决策如何，对当前的决策所形成的状态而言，余下的诸决策必须构成最优策略。简而言之，一个最优化策略的子策略总是最优的。一个问题满足最优化原理又称其具有最优子结构性质。</li>
 <li>状态具有无后效性，当某阶段状态确定后，此阶段以后过程的发展不受此阶段以前各阶段状态的影响。</li>
 </ol>
-<p>钢条切割问题<br>给定一段长度为n英寸的钢条和一个价格标\(p_i\)(i=1,2,…,n)，求切割钢条方案，使得销售收益$r_n$最大。</p>
-<p>$$<br>x_1<br>$$x</p>
+<p>钢条切割问题<br><img src="https://i.loli.net/2020/06/20/gh2HMnNqt1jVeDJ.png" alt="钢条切割问题"></p>
+<table>
+<thead>
+<tr>
+<th>长度</th>
+<th align="left">价格</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td>2</td>
+<td align="left">5</td>
+</tr>
+<tr>
+<td>3</td>
+<td align="left">8</td>
+</tr>
+<tr>
+<td>4</td>
+<td align="left">9</td>
+</tr>
+<tr>
+<td>5</td>
+<td align="left">10</td>
+</tr>
+<tr>
+<td>6</td>
+<td align="left">17</td>
+</tr>
+<tr>
+<td>7</td>
+<td align="left">17</td>
+</tr>
+<tr>
+<td>8</td>
+<td align="left">20</td>
+</tr>
+<tr>
+<td>9</td>
+<td align="left">24</td>
+</tr>
+<tr>
+<td></td>
+<td align="left">30</td>
+</tr>
+</tbody></table>
+<p>考虑n = 4的情况(考虑切割的先后顺序)：</p>
+<p><img src="https://i.loli.net/2020/06/20/6oua3UQLICvZzcy.png" alt="4英寸钢条的8种切割方案"></p>
+<p>综合所有情况，n=4情况下的最优解是将一段长度为4英寸的钢条切割为两段各长2英寸的钢条，产生5+5=10的收益。</p>
+<p>长度为n英寸的钢条共有2^(n-1)种不同的切割方案，因为在距离钢条坐断i英寸的地方，总是可以选择切割或者不切割。如果一个最优解将钢条切割为k段，那么这个最优切割方案<br>$$<br>n = i_1+i_2+…+i_k<br>$$<br>此时的最大收益即为<br>$$<br>r_n = p_{i_1}+p_{i_2}+…+p_{i_k}<br>$$<br>一般地，对于r_n，我们可以用更短的钢条的最优切割收益来描述它：<br>$$<br>r_n = max(p_n, r_1+r_{n-1}, r_2+r_{n-2},…,r_{n-1}+r_1)<br>$$<br>第一个参数p_n对应不切割，后续的参数分别对应：首先切割成i和n-i的两段，接着求这两段段最优切割收益r_i和r_(n-i)。</p>
 
       
     </div>
