@@ -210,7 +210,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-20 17:32:56" itemprop="dateModified" datetime="2020-06-20T17:32:56+08:00">2020-06-20</time>
+                <time title="修改时间：2020-06-20 17:36:46" itemprop="dateModified" datetime="2020-06-20T17:36:46+08:00">2020-06-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -281,7 +281,7 @@
 <li>最优化原理(最优子结构性质)最优化原 理可这样阐述：一个最优化策略具有这样的性质，不论过去状态和决策如何，对当前的决策所形成的状态而言，余下的诸决策必须构成最优策略。简而言之，一个最优化策略的子策略总是最优的。一个问题满足最优化原理又称其具有最优子结构性质。</li>
 <li>状态具有无后效性，当某阶段状态确定后，此阶段以后过程的发展不受此阶段以前各阶段状态的影响。</li>
 </ol>
-<p>钢条切割问题<br>给定一段长度为n英寸的钢条和一个价格标$p_i$(i=1,2,…,n)，求切割钢条方案，使得销售收益$r_n$最大。</p>
+<p>钢条切割问题<br>给定一段长度为n英寸的钢条和一个价格标\(p_i\)(i=1,2,…,n)，求切割钢条方案，使得销售收益$r_n$最大。</p>
 <p>$$<br>x_1<br>$$x</p>
 
       
@@ -333,7 +333,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-30 19:48:48" itemprop="dateModified" datetime="2020-05-30T19:48:48+08:00">2020-05-30</time>
+                <time title="修改时间：2020-06-20 17:36:10" itemprop="dateModified" datetime="2020-06-20T17:36:10+08:00">2020-06-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -359,32 +359,19 @@
 
       
           <h3 id="事件——MotionEvent类"><a href="#事件——MotionEvent类" class="headerlink" title="事件——MotionEvent类"></a>事件——MotionEvent类</h3><ul>
-<li><p>ACTION_DOWN 手指刚接触屏幕</p>
-</li>
-<li><p>ACTION_UP 手指从屏幕上松开</p>
-</li>
-<li><p>ACTION_MOVE 手指在屏幕上移动</p>
-</li>
-<li><p>……</p>
-</li>
+<li>ACTION_DOWN 手指刚接触屏幕</li>
+<li>ACTION_UP 手指从屏幕上松开</li>
+<li>ACTION_MOVE 手指在屏幕上移动</li>
+<li>……</li>
 </ul>
-<p>一次手指触摸屏幕的行为会触发一系列的点击事件，同一个事件序列是指从手指接触屏幕的那一刻起，到手指离开屏幕的那一刻结束，在这个过程中所产生的一系列事件，这个事件序列以ACTION_DOWN事件开始，中间含有数量不定的ACTION_MOVE事件，最终以ACTION_UP事件结束。</p>
-<h3 id="事件分发的三个重要方法"><a href="#事件分发的三个重要方法" class="headerlink" title="事件分发的三个重要方法"></a>事件分发的三个重要方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent ev)</span> <span class="comment">//用来分发事件</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onInterceptTouchEvent</span><span class="params">(MotionEvetn event)</span> <span class="comment">//用来拦截事件</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="function">  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> <span class="comment">//用来处理事件</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="function">  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="comment">//三个方法的基本处理逻辑</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent ev)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">  	<span class="keyword">boolean</span> consume = <span class="keyword">false</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">  	<span class="keyword">if</span> ( onInterceptTouchEvent(ev) ) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">      	consume = onTouchEvent(ev);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    &#125; <span class="keyword">else</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">      	consume = child.dispatchTouchEvent(ev);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">  	<span class="keyword">return</span> consum;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-
-<p><img src="https://i.loli.net/2020/05/30/7ud3IoFREkDwJme.png" alt="点击事件在View中的分发.png"></p>
-<h3 id="事件分发的基本顺序"><a href="#事件分发的基本顺序" class="headerlink" title="事件分发的基本顺序"></a>事件分发的基本顺序</h3><p>Activity–&gt;Window–&gt;ViewGroup/View–&gt;…–&gt;View</p>
-<h4 id="Activity处理点击事件"><a href="#Activity处理点击事件" class="headerlink" title="Activity处理点击事件"></a>Activity处理点击事件</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent ev)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> (ev.getAction() == MotionEvent.ACTION_DOWN) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    onUserInteraction();<span class="comment">//空方法，用来重写以获知已进行了交互</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  <span class="comment">//交给Activity所附属的Window进行事件分发</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">if</span> (getWindow().superDispatchTouchEvent(ev)) &#123; </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">return</span> onTouchEvent(ev); <span class="comment">// 如果事件没有进行处理，则交给Activity的onTouchEvent</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-
-<h4 id="PhoneWindow-Window的实现类"><a href="#PhoneWindow-Window的实现类" class="headerlink" title="PhoneWindow(Window的实现类)"></a>PhoneWindow(Window的实现类)</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// This is the top-level view of the window, containing the window decor.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> DecorView mDecor; <span class="comment">//DecorView继承自FrameLayout</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">superDispatchTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">return</span> mDecor.superDispatchTouchEvent(event); <span class="comment">//将事件传递给DecorView</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-
-<ul>
-<li>正常情况下，一个事件序列只能被一个View拦截且消耗.</li>
-<li>某个View一旦决定拦截，后续的点击事件都不会调用此View的onInterceptTouchEvent()方法.</li>
-<li>某个View一旦不消耗ACTION_DOWN事件，整个序列就直接交给它的父元素处理.</li>
-<li>事件传递过程是由外向内的，即事件总是先传递给父元素，然后再由父元素分发给子View.</li>
-<li>当最底层的View都不消耗事件时，就一层层向外调用父元素的onTouchEvent()方法，直到到Activity层.</li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/29/View%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
