@@ -179,6 +179,336 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zyflool.github.io/2020/07/24/%E5%8F%8D%E7%BC%96%E8%AF%91apk%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="zyflool">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小凡同学的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/24/%E5%8F%8D%E7%BC%96%E8%AF%91apk%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">反编译apk文件</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-24 11:24:35" itemprop="dateCreated datePublished" datetime="2020-07-24T11:24:35+08:00">2020-07-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-25 12:41:50" itemprop="dateModified" datetime="2020-07-25T12:41:50+08:00">2020-07-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="APK的内部结构"><a href="#APK的内部结构" class="headerlink" title="APK的内部结构"></a>APK的内部结构</h3><p>APK是AndroidPackage的缩写，即Android安装包(apk)。apk安装包实际上是一个zip压缩包。我们用解压软件可以将它解压，解压后可以看到如下图的文件结构和目录结构。</p>
+<p><img src="https://s1.ax1x.com/2020/07/25/UzKDPK.png" alt=""></p>
+<h4 id="classes-dex"><a href="#classes-dex" class="headerlink" title="classes.dex"></a>classes.dex</h4><p>classes.dex就是程序中java文件被编译后生成的字节码。因为Dalvik虚拟机是在Java虚拟机进行了优化，执行的是Dalvik字节码，这些Dalvik字节码是由Java字节码转换而来，一般情况下，Android应用在打包时通过AndroidSDK中的dx工具将Java字节码转换为Dalvik字节码。</p>
+<h4 id="res"><a href="#res" class="headerlink" title="res/"></a>res/</h4><p>res中存放的的这个应用会使用到的资源文件，例如字符串、图片、界面布局等等。它的目录结构与Android Studio中我们看到的项目工程的res目录一样。这里面的xml文件内容都是被编译器编译过的，实际它们上已经变成了二进制文件，不再是文本文件了。</p>
+<h4 id="AndroidManifest-xml"><a href="#AndroidManifest-xml" class="headerlink" title="AndroidManifest.xml"></a>AndroidManifest.xml</h4><p>AndroidManifest.xml也是被编译器处理过的文件，也是二进制文件，不再是文本文件。</p>
+<h4 id="resources-arsc"><a href="#resources-arsc" class="headerlink" title="resources.arsc"></a>resources.arsc</h4><p>用来记录资源文件和资源ID之间的映射关系，用来根据资源ID寻找资源。Android的开发是分模块的，res目录专门用来存放资源文件，当在代码中需要调用资源文件时，只需要调用findviewbyId()就可以得到资源文件，每当在res文件夹下放一个文件，aapt就会自动生成对应的ID保存在.R文件，我们调用这个ID就可以，但是只有这个ID还不够，.R文件只是保证编译程序不报错，实际上在程序运行时，系统要根据ID去寻找对应的资源路径，而resources.arsc文件就是用来记录这些ID和资源文件位置对应关系的文件。</p>
+<h4 id="META-INF"><a href="#META-INF" class="headerlink" title="META-INF/"></a>META-INF/</h4><p>也就是一个 manifest ，从 java jar 文件引入的描述包信息的目录</p>
+<h4 id="kotlin"><a href="#kotlin" class="headerlink" title="kotlin/"></a>kotlin/</h4><p>这些文件包含用于标准（“内置”）Kotlin类声明的数据，这些声明未编译为<code>.class</code>文件，而是映射到平台上的现有类型。例如，<code>kotlin/kotlin.kotlin_builtins</code>包含用于在包非物理类的配置信息<code>kotlin</code>：<code>Int</code>，<code>String</code>，<code>Enum</code>，<code>Annotation</code>，<code>Collection</code>，等。</p>
+<h4 id="assets"><a href="#assets" class="headerlink" title="assets/"></a>assets/</h4><p>用于存放需要打包到APK中的静态文件。assets目录支持任意深度的子目录，用户可以根据自己的需求任意部署文件夹架构。而且res目录下的文件会在.R文件中生成对应的资源ID，assets不会自动生成对应的ID，访问的时候需要AssetManager类。</p>
+<h4 id="libs"><a href="#libs" class="headerlink" title="libs/"></a>libs/</h4><p>一般存放应用程序依赖的native库文件，一般是用C/C++编写。</p>
+<h3 id="apk文件的反编译"><a href="#apk文件的反编译" class="headerlink" title="apk文件的反编译"></a>apk文件的反编译</h3><h4 id="工具软件"><a href="#工具软件" class="headerlink" title="工具软件"></a>工具软件</h4><p>apktool工具：获取需要反编译APK文件资源文件（图片和布局文件）。</p>
+<p>dex2jar工具：将APK反编译成源代码 。</p>
+<p>jd-gui工具：查看APK中源代码文件 。</p>
+<h4 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h4><ol>
+<li><p>使用命令行对apk文件进行资源文件的获取：</p>
+<p><code>apktool d xxx.apk</code></p>
+<p>反编译完成后，在apktool中会新出现一个新的文件夹，名字跟apk的名字一样的文件夹，里面就有我们需要的布局文件和图片资源文件。文件夹如下图所示：</p>
+<p><img src="https://s1.ax1x.com/2020/07/25/Uz35jO.png" alt=""></p>
+<ol start="2">
+<li><p>反编译源代码：首先将要反编译的APK后缀名改为 .zip，然后解压成文件夹，将文件夹中的classes.dex文件，然后把这个文件放在dex2jar文件夹的目录下，跟dex2jar.bat同一级目录下。然后在这个文件夹中使用命令行进行反编译：</p>
+<p><code>sh d2j-dex2jar.sh classes.dex</code></p>
+<p>执行完成后在目录中会生成一个classes_dex2jar.jar的文件，代表反编译成功。</p>
+</li>
+</ol>
+</li>
+</ol>
+<ol start="3">
+<li>最后使用jd-gui工具，把上一步生成的classes_dex2jar.jar文件拖进来就能够看到源代码了</li>
+</ol>
+<p><img src="https://s1.ax1x.com/2020/07/25/UzGpz6.png" alt=""></p>
+<p><strong>引用</strong></p>
+<p><a href="https://blog.csdn.net/linghu_java/java/article/details/7650802" target="_blank" rel="noopener">https://blog.csdn.net/linghu_java/java/article/details/7650802</a></p>
+<p><a href="https://blog.csdn.net/anddlecn/java/article/details/50972518" target="_blank" rel="noopener">https://blog.csdn.net/anddlecn/java/article/details/50972518</a></p>
+<p><a href="https://blog.csdn.net/zengrun1992/java/article/details/40076767" target="_blank" rel="noopener">https://blog.csdn.net/zengrun1992/java/article/details/40076767</a></p>
+<p><a href="https://www.cnblogs.com/zhaijiahui/p/6916556.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhaijiahui/p/6916556.html</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zyflool.github.io/2020/07/04/Kotlin%E5%8D%8F%E7%A8%8B%E7%AE%80%E4%BB%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="zyflool">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小凡同学的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/04/Kotlin%E5%8D%8F%E7%A8%8B%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">Kotlin协程简介</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-04 15:08:07" itemprop="dateCreated datePublished" datetime="2020-07-04T15:08:07+08:00">2020-07-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-11 15:18:49" itemprop="dateModified" datetime="2020-07-11T15:18:49+08:00">2020-07-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="协程是什么"><a href="#协程是什么" class="headerlink" title="协程是什么"></a>协程是什么</h3><blockquote>
+<p>协程（英语：coroutine）是计算机程序的一类组件，推广了协作式多任务的子程序，允许执行被挂起与被恢复。相对子例程而言，协程更为一般和灵活，但在实践中使用没有子例程那样广泛。协程更适合于用来实现彼此熟悉的程序组件，如协作式多任务、异常处理、事件循环、迭代器、无限列表和管道。</p>
+</blockquote>
+<p>协程并不是 Kotlin 提出来的新概念，其他的一些编程语言，例如：Go、Python 等都可以在语言层面上实现协程，甚至是 Java，也可以通过使用扩展库来间接地支持协程。</p>
+<p>当我们讨论协程和线程的关系时，很容易<strong>陷入中文的误区</strong>，两者都有一个「程」字，就觉得有关系，其实就英文而言，Coroutines 和 Threads 就是两个概念。</p>
+<p>从 Android 开发者的角度去理解它们的关系：</p>
+<ul>
+<li>我们所有的代码都是跑在线程中的，而线程是跑在进程中的。</li>
+<li>协程没有直接和操作系统关联，但它不是空中楼阁，它也是跑在线程中的，可以是单线程，也可以是多线程。</li>
+<li>单线程中的协程总的执行时间并不会比不用协程少。</li>
+<li>Android 系统上，如果在主线程进行网络请求，会抛出 <code>NetworkOnMainThreadException</code>，对于在主线程上的协程也不例外，这种场景使用协程还是要切线程的。</li>
+</ul>
+<p>协程设计的初衷是为了解决并发问题，让 「协作式多任务」 实现起来更加方便。</p>
+<p>协程就是 Kotlin 提供的一套线程封装的 API，但并不是说协程就是为线程而生的。</p>
+<p>不过，我们学习 Kotlin 中的协程，一开始确实可以从线程控制的角度来切入。因为在 Kotlin 中，协程的一个典型的使用场景就是线程控制。就像 Java 中的 <code>Executor</code> 和 Android 中的 <code>AsyncTask</code>，Kotlin 中的协程也有对 Thread API 的封装，让我们可以在写代码时，不用关注多线程就能够很方便地写出并发操作。</p>
+<p>在 Java 中要实现并发操作通常需要开启一个 <code>Thread</code> ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="meta">@Override</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">&#125;).start();</span></pre></td></tr></table></figure>
+
+<p>这里仅仅只是开启了一个新线程，至于它何时结束、执行结果怎么样，我们在主线程中是无法直接知道的。</p>
+<p>Kotlin 中同样可以通过线程的方式去写：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">Thread(&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;).start()</span></pre></td></tr></table></figure>
+
+<p>可以看到，和 Java 一样也摆脱不了直接使用 <code>Thead</code> 的那些困难和不方便：</p>
+<ul>
+<li>线程什么时候执行结束</li>
+<li>线程间的相互通信</li>
+<li>多个线程的管理</li>
+</ul>
+<p>我们可以用 Java 的 <code>Executor</code> 线程池来进行线程管理：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> executor = Executors.newCachedThreadPool()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">executor.execute(&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;)</span></pre></td></tr></table></figure>
+
+<p>用 Android 的 <code>AsyncTask</code> 来解决线程间通信：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">object</span> : AsyncTask&lt;T0, T1, T2&gt; &#123; </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">doInBackground</span><span class="params">(<span class="keyword">vararg</span> args: <span class="type">T0</span>)</span></span>: String &#123; ... &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onProgressUpdate</span><span class="params">(<span class="keyword">vararg</span> args: <span class="type">T1</span>)</span></span> &#123; ... &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onPostExecute</span><span class="params">(t3: <span class="type">T3</span>)</span></span> &#123; ... &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>下面的例子是使用协程进行网络请求获取用户信息并显示到 UI 控件上：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">launch(&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">val</span> user = api.getUser() <span class="comment">// 👈 网络请求（IO 线程）</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    nameTv.text = user.name  <span class="comment">// 👈 更新 UI（主线程）</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;)</span></pre></td></tr></table></figure>
+
+<p>这里只是展示了一个代码片段，<code>launch</code> 并不是一个顶层函数，它必须在一个对象中使用。</p>
+<p><code>launch</code> 函数加上实现在 <code>{}</code> 中具体的逻辑，就构成了一个协程。</p>
+<p>通常我们做网络请求，要不就传一个 callback，要不就是在 IO 线程里进行阻塞式的同步调用，而在这段代码中，上下两个语句分别工作在两个线程里，但写法上看起来和普通的单线程代码一样。</p>
+<p>这里的 <code>api.getUser</code> 是一个<strong>挂起函数</strong>，所以能够保证 <code>nameTv.text</code> 的正确赋值，这就涉及到了协程中最著名的「非阻塞式挂起」。这个名词看起来不是那么容易理解，我们后续的文章会专门对这个概念进行讲解。现在先把这个概念放下，只需要记住协程就是这样写的就行了。</p>
+<p>这种「用同步的方式写异步的代码」看起来很方便吧，那么我们来看看协程具体好在哪。</p>
+<h2 id="协程好在哪"><a href="#协程好在哪" class="headerlink" title="协程好在哪"></a>协程好在哪</h2><h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><p>前面提到，<code>launch</code> 函数不是顶层函数，是不能直接用的，可以使用下面三种方法来创建协程：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法一，使用 runBlocking 顶层函数</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">runBlocking &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    getImage(imageId)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法二，使用 GlobalScope 单例对象</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//            👇 可以直接调用 launch 开启协程</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">GlobalScope.launch &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    getImage(imageId)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法三，自行通过 CoroutineContext 创建一个 CoroutineScope 对象</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//                                    👇 需要一个类型为 CoroutineContext 的参数</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> coroutineScope = CoroutineScope(context)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">coroutineScope.launch &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    getImage(imageId)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<ul>
+<li>方法一通常适用于单元测试的场景，而业务开发中不会用到这种方法，因为它是线程阻塞的。</li>
+<li>方法二和使用 <code>runBlocking</code> 的区别在于不会阻塞线程。但在 Android 开发中同样不推荐这种用法，因为它的生命周期会和 app 一致，且不能取消（什么是协程的取消后面的文章会讲）。</li>
+<li>方法三是比较推荐的使用方法，我们可以通过 <code>context</code> 参数去管理和控制协程的生命周期（这里的 <code>context</code> 和 Android 里的不是一个东西，是一个更通用的概念，会有一个 Android 平台的封装来配合使用）。</li>
+</ul>
+<p>关于 <code>CoroutineScope</code> 和 <code>CoroutineContext</code> 的更多内容后面的文章再讲。</p>
+<p>协程最常用的功能是并发，而并发的典型场景就是多线程。可以使用 <code>Dispatchers.IO</code> 参数把任务切到 IO 线程执行：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">coroutineScope.launch(Dispatchers.IO) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>也可以使用 <code>Dispatchers.Main</code> 参数切换到主线程：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">coroutineScope.launch(Dispatchers.Main) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>所以在「协程是什么」一节中讲到的异步请求的例子完整写出来是这样的：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">coroutineScope.launch(Dispatchers.Main) &#123;   <span class="comment">// 在主线程开启协程</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">val</span> user = api.getUser() <span class="comment">// IO 线程执行网络请求</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    nameTv.text = user.name  <span class="comment">// 主线程更新 UI</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>Kotlin</p>
+<p>而通过 Java 实现以上逻辑，我们通常需要这样写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">☕️</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">api.getUser(<span class="keyword">new</span> Callback&lt;User&gt;() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="meta">@Override</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">success</span><span class="params">(User user)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        runOnUiThread(<span class="keyword">new</span> Runnable() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">            <span class="meta">@Override</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">                nameTv.setText(user.name);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">            &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        &#125;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    <span class="meta">@Override</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">failure</span><span class="params">(Exception e)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">        ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">&#125;);</span></pre></td></tr></table></figure>
+
+<p>Java</p>
+<p>这种回调式的写法，打破了代码的顺序结构和完整性，读起来相当难受。</p>
+<h3 id="协程的「1-到-0」"><a href="#协程的「1-到-0」" class="headerlink" title="协程的「1 到 0」"></a>协程的「1 到 0」</h3><p>对于回调式的写法，如果并发场景再复杂一些，代码的嵌套可能会更多，这样的话维护起来就非常麻烦。但如果你使用了 Kotlin 协程，多层网络请求只需要这么写：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">🏝️</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">coroutineScope.launch(Dispatchers.Main) &#123;       <span class="comment">// 开始协程：主线程</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">val</span> token = api.getToken()                  <span class="comment">// 网络请求：IO 线程</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">val</span> user = api.getUser(token)               <span class="comment">// 网络请求：IO 线程</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    nameTv.text = user.name                     <span class="comment">// 更新 UI：主线程</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>Kotlin</p>
+<p>如果遇到的场景是多个网络请求需要等待所有请求结束之后再对 UI 进行更新。比如以下两个请求：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">🏝️</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">api.getAvatar(user, callback)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">api.getCompanyLogo(user, callback)</span></pre></td></tr></table></figure>
+
+<p>Kotlin</p>
+<p>如果使用回调式的写法，那么代码可能写起来既困难又别扭。于是我们可能会选择妥协，通过先后请求代替同时请求：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">🏝️</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">api.getAvatar(user) &#123; avatar -&gt;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    api.getCompanyLogo(user) &#123; logo -&gt;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        show(merge(avatar, logo))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>Kotlin</p>
+<p>在实际开发中如果这样写，本来能够并行处理的请求被强制通过串行的方式去实现，可能会导致等待时间长了一倍，也就是性能差了一倍。</p>
+<p>而如果使用协程，可以直接把两个并行请求写成上下两行，最后再把结果进行合并即可：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">🏝️</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">coroutineScope.launch(Dispatchers.Main) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">//            👇  async 函数之后再讲</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">val</span> avatar = async &#123; api.getAvatar(user) &#125;    <span class="comment">// 获取用户头像</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">val</span> logo = async &#123; api.getCompanyLogo(user) &#125; <span class="comment">// 获取用户所在公司的 logo</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">val</span> merged = suspendingMerge(avatar, logo)    <span class="comment">// 合并结果</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">//                  👆</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    show(merged) <span class="comment">// 更新 UI</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>Kotlin</p>
+<p>可以看到，即便是比较复杂的并行网络请求，也能够通过协程写出结构清晰的代码。需要注意的是 <code>suspendingMerge</code> 并不是协程 API 中提供的方法，而是我们自定义的一个可「挂起」的结果合并方法。至于挂起具体是什么，可以看下一篇文章。</p>
+<p>让复杂的并发代码，写起来变得简单且清晰，是协程的优势。</p>
+<p>这里，两个没有相关性的后台任务，因为用了协程，被安排得明明白白，互相之间配合得很好，也就是我们之前说的「协作式任务」。</p>
+<p>本来需要回调，现在直接没有回调了，这种从 1 到 0 的设计思想真的妙哉。</p>
+<p>在了解了协程的作用和优势之后，我们再来看看协程是怎么使用的。</p>
+<h2 id="协程怎么用"><a href="#协程怎么用" class="headerlink" title="协程怎么用"></a><strong>协程怎么用</strong></h2><h3 id="在项目中配置对-Kotlin-协程的支持"><a href="#在项目中配置对-Kotlin-协程的支持" class="headerlink" title="在项目中配置对 Kotlin 协程的支持"></a>在项目中配置对 Kotlin 协程的支持</h3><p>在使用协程之前，我们需要在 <code>build.gradle</code> 文件中增加对 Kotlin 协程的依赖：</p>
+<ul>
+<li>项目根目录下的 <code>build.gradle</code> :</li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 👇</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    ext.kotlin_coroutines = <span class="string">'1.3.1'</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>Groovy</p>
+<ul>
+<li>Module 下的 <code>build.gradle</code> :</li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">//                                       👇 依赖协程核心库</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    implementation <span class="string">"org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">//                                       👇 依赖当前平台所对应的平台库</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    implementation <span class="string">"org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>Groovy</p>
+<p>Kotlin 协程是以官方扩展库的形式进行支持的。而且，我们所使用的「核心库」和 「平台库」的版本应该保持一致。</p>
+<ul>
+<li>核心库中包含的代码主要是协程的公共 API 部分。有了这一层公共代码，才使得协程在各个平台上的接口得到统一。</li>
+<li>平台库中包含的代码主要是协程框架在具体平台的具体实现方式。因为多线程在各个平台的实现方式是有所差异的。</li>
+</ul>
+<p>完成了以上的准备工作就可以开始使用协程了。</p>
+<h3 id="开始使用协程"><a href="#开始使用协程" class="headerlink" title="开始使用协程"></a>开始使用协程</h3><p>协程最简单的使用方法，其实在前面章节就已经看到了。我们可以通过一个 <code>launch</code> 函数实现线程切换的功能：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">🏝️</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//               👇</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">coroutineScope.launch(Dispatchers.IO) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>Kotlin</p>
+<p>这个 <code>launch</code> 函数，它具体的含义是：我要创建一个新的协程，并在指定的线程上运行它。这个被创建、被运行的所谓「协程」是谁？就是你传给 <code>launch</code> 的那些代码，这一段连续代码叫做一个「协程」。</p>
+<p>所以，什么时候用协程？当你需要切线程或者指定线程的时候。你要在后台执行任务？切！</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">🏝️</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">launch(Dispatchers.IO) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">val</span> image = getImage(imageId)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>Kotlin</p>
+<p>然后需要在前台更新界面？再切！</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">🏝️</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">coroutineScope.launch(Dispatchers.IO) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">val</span> image = getImage(imageId)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    launch(Dispatchers.Main) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        avatarIv.setImageBitmap(image)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>Kotlin</p>
+<p>好像有点不对劲？这不还是有嵌套嘛。</p>
+<p>如果只是使用 <code>launch</code> 函数，协程并不能比线程做更多的事。不过协程中却有一个很实用的函数：<code>withContext</code> 。这个函数可以切换到指定的线程，并在闭包内的逻辑执行结束之后，自动把线程切回去继续执行。那么可以将上面的代码写成这样：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">🏝️</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">coroutineScope.launch(Dispatchers.Main) &#123;      <span class="comment">// 👈 在 UI 线程开始</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">val</span> image = withContext(Dispatchers.IO) &#123;  <span class="comment">// 👈 切换到 IO 线程，并在执行完成后切回 UI 线程</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        getImage(imageId)                      <span class="comment">// 👈 将会运行在 IO 线程</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    avatarIv.setImageBitmap(image)             <span class="comment">// 👈 回到 UI 线程更新 UI</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>Kotlin</p>
+<p>这种写法看上去好像和刚才那种区别不大，但如果你需要频繁地进行线程切换，这种写法的优势就会体现出来。可以参考下面的对比：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">🏝️</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一种写法</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">coroutineScope.launch(Dispatchers.IO) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    launch(Dispatchers.Main)&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        launch(Dispatchers.IO) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">            ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">            launch(Dispatchers.Main) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">                ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">            &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过第二种写法来实现相同的逻辑</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">coroutineScope.launch(Dispatchers.Main) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">    withContext(Dispatchers.IO) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">        ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    withContext(Dispatchers.IO) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">        ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>Kotlin</p>
+<p>由于可以”自动切回来”，消除了并发代码在协作时的嵌套。由于消除了嵌套关系，我们甚至可以把 <code>withContext</code> 放进一个单独的函数里面：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">🏝️</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">launch(Dispatchers.Main) &#123;              <span class="comment">// 👈 在 UI 线程开始</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">val</span> image = getImage(imageId)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    avatarIv.setImageBitmap(image)     <span class="comment">// 👈 执行结束后，自动切换回 UI 线程</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//                               👇</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">getImage</span><span class="params">(imageId: <span class="type">Int</span>)</span></span> = withContext(Dispatchers.IO) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>Kotlin</p>
+<p>这就是之前说的「用同步的方式写异步的代码」了。</p>
+<p>不过如果只是这样写，编译器是会报错的：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">🏝️</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">getImage</span><span class="params">(imageId: <span class="type">Int</span>)</span></span> = withContext(Dispatchers.IO) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// IDE 报错 Suspend function'withContext' should be called only from a coroutine or another suspend funcion</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>Kotlin</p>
+<p>意思是说，<code>withContext</code> 是一个 <code>suspend</code> 函数，它需要在协程或者是另一个 <code>suspend</code> 函数中调用。</p>
+<h2 id="suspend"><a href="#suspend" class="headerlink" title="suspend"></a><strong>suspend</strong></h2><p><code>suspend</code> 是 Kotlin 协程最核心的关键字，几乎所有介绍 Kotlin 协程的文章和演讲都会提到它。它的中文意思是「暂停」或者「可挂起」。如果你去看一些技术博客或官方文档的时候，大概可以了解到：「代码执行到 <code>suspend</code> 函数的时候会『挂起』，并且这个『挂起』是非阻塞式的，它不会阻塞你当前的线程。」</p>
+<p>上面报错的代码，其实只需要在前面加一个 <code>suspend</code> 就能够编译通过：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">🏝️</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//👇</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">getImage</span><span class="params">(imageId: <span class="type">Int</span>)</span></span> = withContext(Dispatchers.IO) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>Kotlin</p>
+<p>本篇文章到此结束，而 <code>suspend</code> 具体是什么，「非阻塞式」又是怎么回事，函数怎么被挂起，这些疑问的答案，将在下一篇文章全部揭晓。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://zyflool.github.io/2020/06/17/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95%E7%AE%80%E8%BF%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -566,10 +896,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-05-03 15:26:24 / 修改时间：15:32:59" itemprop="dateCreated datePublished" datetime="2020-05-03T15:26:24+08:00">2020-05-03</time>
+              <time title="创建时间：2020-05-03 15:26:24" itemprop="dateCreated datePublished" datetime="2020-05-03T15:26:24+08:00">2020-05-03</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-27 05:16:28" itemprop="dateModified" datetime="2020-06-27T05:16:28+08:00">2020-06-27</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -596,7 +932,32 @@
           <h5 id="ImageButton波纹点击效果的background"><a href="#ImageButton波纹点击效果的background" class="headerlink" title="ImageButton波纹点击效果的background"></a>ImageButton波纹点击效果的background</h5><p>一般ImageButton都会把图片设置为src，然后background就默认成很丑的button默认的灰色背景，但是换成纯色背景就会取代原来的点击的波纹效果，所以要设置background为android自带的点击效果的背景：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">//圆形波纹</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">android:background=”?android:attr/selectableItemBackgroundBorderless”</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">//有边界波纹</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">android:background=”?android:attr/selectableItemBackground”</span></pre></td></tr></table></figure>
 
-<h5 id=""><a href="#" class="headerlink" title=""></a></h5>
+<h5 id="NavigationBottomView-图标文字颜色设置"><a href="#NavigationBottomView-图标文字颜色设置" class="headerlink" title="NavigationBottomView 图标文字颜色设置"></a>NavigationBottomView 图标文字颜色设置</h5><p>属性设置：<code>app:itemIconTint=&quot;@color/bottom_nav_select_color&quot;</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:color</span>=<span class="string">"#CBDEFA"</span> <span class="attr">android:state_checked</span>=<span class="string">"true"</span> /&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:color</span>=<span class="string">"#001C35"</span> <span class="attr">android:state_checked</span>=<span class="string">"false"</span>/&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span></pre></td></tr></table></figure>
+
+<h5 id="NavigationBottomView-ViewPager-Fragment"><a href="#NavigationBottomView-ViewPager-Fragment" class="headerlink" title="NavigationBottomView+ViewPager+Fragment"></a>NavigationBottomView+ViewPager+Fragment</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">BottomNav = view.findViewById(R.id.bnv_home);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">        DataVp = view.findViewById(R.id.vp_data);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        DataVp.addOnPageChangeListener(<span class="keyword">new</span> ViewPager.OnPageChangeListener() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">            <span class="meta">@Override</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageScrolled</span><span class="params">(<span class="keyword">int</span> position, <span class="keyword">float</span> positionOffset, <span class="keyword">int</span> positionOffsetPixels)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">            &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">            <span class="meta">@Override</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageSelected</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">                BottomNav.getMenu().getItem(position).setChecked(<span class="keyword">true</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">            &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">            <span class="meta">@Override</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageScrollStateChanged</span><span class="params">(<span class="keyword">int</span> state)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">            &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">        &#125;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">        </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">        BottomNav.setOnNavigationItemSelectedListener(<span class="keyword">new</span> BottomNavigationView.OnNavigationItemSelectedListener() &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">            <span class="meta">@Override</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onNavigationItemSelected</span><span class="params">(@NonNull MenuItem item)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">                DataVp.setCurrentItem(item.getOrder());</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">            &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">        &#125;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">        DataVp.setAdapter(<span class="keyword">new</span> FragmentPagerAdapter(getActivity().getSupportFragmentManager()) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line">            <span class="meta">@Override</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line">            <span class="function"><span class="keyword">public</span> Fragment <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line">                <span class="keyword">switch</span> (position) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line">                    <span class="keyword">case</span> <span class="number">0</span>:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line">                        <span class="keyword">return</span> dataFragment;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line">                    <span class="keyword">case</span> <span class="number">1</span>:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">36</span></pre></td><td class="code"><pre><span class="line">                        <span class="keyword">return</span> infoFragment;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">37</span></pre></td><td class="code"><pre><span class="line">                    <span class="keyword">case</span> <span class="number">2</span>:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">38</span></pre></td><td class="code"><pre><span class="line">                        <span class="keyword">return</span> aboutFragment;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">39</span></pre></td><td class="code"><pre><span class="line">                &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">40</span></pre></td><td class="code"><pre><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">41</span></pre></td><td class="code"><pre><span class="line">            &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">42</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">43</span></pre></td><td class="code"><pre><span class="line">            <span class="meta">@Override</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">44</span></pre></td><td class="code"><pre><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">45</span></pre></td><td class="code"><pre><span class="line">                <span class="keyword">return</span> <span class="number">3</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">46</span></pre></td><td class="code"><pre><span class="line">            &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">47</span></pre></td><td class="code"><pre><span class="line">        &#125;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">48</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">49</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> view;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">50</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr></table></figure>
+
+<h5 id="TabLayout标签消失"><a href="#TabLayout标签消失" class="headerlink" title="TabLayout标签消失"></a>TabLayout标签消失</h5><p>TabLayout.setupWithViewPager()执行路径上有一个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">populateFromPagerAdapter</span><span class="params">()</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">        <span class="comment">//注意此处：</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        removeAllTabs();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span> (mPagerAdapter != <span class="keyword">null</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">final</span> <span class="keyword">int</span> adapterCount = mPagerAdapter.getCount();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; adapterCount; i++) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">                addTab(newTab().setText(mPagerAdapter.getPageTitle(i)), <span class="keyword">false</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">            &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">            <span class="comment">// Make sure we reflect the currently set ViewPager item</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">if</span> (mViewPager != <span class="keyword">null</span> &amp;&amp; adapterCount &gt; <span class="number">0</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">                <span class="keyword">final</span> <span class="keyword">int</span> curItem = mViewPager.getCurrentItem();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">                <span class="keyword">if</span> (curItem != getSelectedTabPosition() &amp;&amp; curItem &lt; getTabCount()) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">                    selectTab(getTabAt(curItem));</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">                &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">            &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr></table></figure>
+
+<p>把先前加进去的tab都删除了，所以要在绑定ViewPager之后再设置tab的标签。</p>
+<h5 id="FloatingActionButton-有透明度的背景"><a href="#FloatingActionButton-有透明度的背景" class="headerlink" title="FloatingActionButton 有透明度的背景"></a>FloatingActionButton 有透明度的背景</h5><p>使用<code>app:backgroundTint</code>属性设置背景颜色，但当颜色具有一定的透明度时，显示的按钮中间会有一块多边形的区域，区域外的透明度是正常的，区域内就是不正常的，点击时这块区域还会缩小。为了减小这样的效果带来的影响，要设置下面的属性：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">app:borderWidth="0dp"</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">app:elevation="1dp"</span></pre></td></tr></table></figure>
+
+<h5 id="AlertDialog-设置背景"><a href="#AlertDialog-设置背景" class="headerlink" title="AlertDialog 设置背景"></a>AlertDialog 设置背景</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">AlertDialog dialog = <span class="keyword">new</span> AlertDialog.Builder(mContext).create();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> Window window = dialog.getWindow();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">window.setBackgroundDrawable(<span class="keyword">new</span> ColorDrawable(<span class="number">0</span>));</span></pre></td></tr></table></figure>
+
+<h5 id="Fragment-单例"><a href="#Fragment-单例" class="headerlink" title="Fragment 单例"></a>Fragment 单例</h5><p>实际经验告诉我们，不要轻易给自定义Fragment设置单例模式，不然会<code>androidx.fragment.app.Fragment$InstantiationException: Unable to instantiate fragment XXX.XXX.XXXFragment : could not find Fragment constructor</code></p>
+<h5 id="RecyclerView-的数据更新"><a href="#RecyclerView-的数据更新" class="headerlink" title="RecyclerView 的数据更新"></a>RecyclerView 的数据更新</h5><p>有时候会因为传入adapter的数据与显示数据不符，出现下面这样的报错：</p>
+<blockquote>
+<p>java.lang.IndexOutOfBoundsException: Inconsistency detected. Invalid view holder adapter positionViewHolder{42319ed8 position=1 id=-1, oldPos=0, pLpos:0 scrap tmpDetached no parent}</p>
+</blockquote>
+<p>可能是在更新adapter数据List的时候进行notify相关操作导致的两者的不符。</p>
+<p>应该尽量避免使用<code>notifySetChanged()</code>方法，如果有数据更新，最好先<code>notifyItemRangeRemoved()</code>再<code>notifyItemRangeInserted()</code>，保证同步。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( mRumorsList.size() != <span class="number">0</span> ) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">int</span> preSize = mRumorsList.size();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  mRumorsList.clear();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  notifyItemRangeRemoved(<span class="number">0</span>, preSize);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&#125; </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">mRumorsList.addAll(rumorsList);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">notifyItemRangeInserted(<span class="number">0</span>, mRumorsList.size());</span></pre></td></tr></table></figure>
+
+
+
+
       
     </div>
 
@@ -932,173 +1293,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://zyflool.github.io/2020/03/15/%E4%BB%80%E4%B9%88%E6%98%AF%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="zyflool">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小凡同学的博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/15/%E4%BB%80%E4%B9%88%E6%98%AF%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" class="post-title-link" itemprop="url">什么是面向对象</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-03-15 13:27:31 / 修改时间：07:50:52" itemprop="dateCreated datePublished" datetime="2020-03-15T13:27:31+08:00">2020-03-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
-                    <span itemprop="name">学习</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><ul>
-<li>什么是“面向”？</li>
-</ul>
-<p>“面向”这个词看起来过于抽象，对于刚接触的人来讲难以理解，正如我们所看到过的，有些中文翻译常常会导致中国人和外国人都看不懂，所以为了更好的理解，我们需要研究一下“面向对象”的原文：<strong>Object-oriented</strong>，显而易见，我们所知道的“面向”就是这个”oriented”翻译过来的意思，那这个词的本意是什么呢？ </p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/15/%E4%BB%80%E4%B9%88%E6%98%AF%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://zyflool.github.io/2020/03/07/%E5%BC%82%E5%B8%B8%E5%9F%BA%E7%A1%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="zyflool">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小凡同学的博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/07/%E5%BC%82%E5%B8%B8%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">异常基础</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-07 18:25:08" itemprop="dateCreated datePublished" datetime="2020-03-07T18:25:08+08:00">2020-03-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-21 03:58:24" itemprop="dateModified" datetime="2020-03-21T03:58:24+08:00">2020-03-21</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
-                    <span itemprop="name">学习</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h4><p>在程序中出现的错误（无论是编译时还是运行时出现的），称为异常(Exception)。Java使用一种称为异常处理的错误捕获机制来处理这些异常。</p>
-<p>和Java 的其他任何对象一样，异常需要用new在内存堆里创建实例。在所有标准异常中， 存在着两个构建器：第一个是默认构建器，第二个则需使用一个字串自变量，使我们能在异常里置入相关信息：</p>
-<p><code>new RuntimeException(&quot;Null Exception&quot;)</code></p>
-<p>其中的字符串可用各种方法提取出来。</p>
-<p>关键字throw会首先执行new表达式，创建一个不在程序常规执行范围之内的对象。随后，对象实例会从方法中返回。通过抛出一个异常，就可以从原来的作用域中退出。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/07/%E5%BC%82%E5%B8%B8%E5%9F%BA%E7%A1%80/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1171,7 +1365,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1184,7 +1378,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
