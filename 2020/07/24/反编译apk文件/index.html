@@ -46,18 +46,18 @@
   };
 </script>
 
-  <meta name="description" content="APK的内部结构APK是AndroidPackage的缩写，即Android安装包(apk)。apk安装包实际上是一个zip压缩包。我们用解压软件可以将它解压，解压后可以看到如下图的文件结构和目录结构。  classes.dexclasses.dex就是程序中java文件被编译后生成的字节码。因为Dalvik虚拟机是在Java虚拟机进行了优化，执行的是Dalvik字节码，这些Dalvik字节码是由">
+  <meta name="description" content="APK的内部结构APK是AndroidPackage的缩写，即Android安装包(apk)。apk安装包实际上是一个zip压缩包。我们用解压软件可以将它解压，解压后可以看到如下图的文件结构和目录结构。">
 <meta name="keywords" content="Android,apk">
 <meta property="og:type" content="article">
 <meta property="og:title" content="反编译apk文件">
 <meta property="og:url" content="http:&#x2F;&#x2F;zyflool.github.io&#x2F;2020&#x2F;07&#x2F;24&#x2F;%E5%8F%8D%E7%BC%96%E8%AF%91apk%E6%96%87%E4%BB%B6&#x2F;index.html">
 <meta property="og:site_name" content="小凡同学的博客">
-<meta property="og:description" content="APK的内部结构APK是AndroidPackage的缩写，即Android安装包(apk)。apk安装包实际上是一个zip压缩包。我们用解压软件可以将它解压，解压后可以看到如下图的文件结构和目录结构。  classes.dexclasses.dex就是程序中java文件被编译后生成的字节码。因为Dalvik虚拟机是在Java虚拟机进行了优化，执行的是Dalvik字节码，这些Dalvik字节码是由">
+<meta property="og:description" content="APK的内部结构APK是AndroidPackage的缩写，即Android安装包(apk)。apk安装包实际上是一个zip压缩包。我们用解压软件可以将它解压，解压后可以看到如下图的文件结构和目录结构。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;07&#x2F;25&#x2F;UzKDPK.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;07&#x2F;25&#x2F;Uz35jO.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;07&#x2F;25&#x2F;UzGpz6.png">
-<meta property="og:updated_time" content="2020-07-25T04:41:50.192Z">
+<meta property="og:updated_time" content="2020-10-23T14:24:23.949Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;07&#x2F;25&#x2F;UzKDPK.png">
 
@@ -217,7 +217,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-25 12:41:50" itemprop="dateModified" datetime="2020-07-25T12:41:50+08:00">2020-07-25</time>
+                <time title="修改时间：2020-10-23 22:24:23" itemprop="dateModified" datetime="2020-10-23T22:24:23+08:00">2020-10-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -244,6 +244,8 @@
       
         <h3 id="APK的内部结构"><a href="#APK的内部结构" class="headerlink" title="APK的内部结构"></a>APK的内部结构</h3><p>APK是AndroidPackage的缩写，即Android安装包(apk)。apk安装包实际上是一个zip压缩包。我们用解压软件可以将它解压，解压后可以看到如下图的文件结构和目录结构。</p>
 <p><img src="https://s1.ax1x.com/2020/07/25/UzKDPK.png" alt=""></p>
+<a id="more"></a>
+
 <h4 id="classes-dex"><a href="#classes-dex" class="headerlink" title="classes.dex"></a>classes.dex</h4><p>classes.dex就是程序中java文件被编译后生成的字节码。因为Dalvik虚拟机是在Java虚拟机进行了优化，执行的是Dalvik字节码，这些Dalvik字节码是由Java字节码转换而来，一般情况下，Android应用在打包时通过AndroidSDK中的dx工具将Java字节码转换为Dalvik字节码。</p>
 <h4 id="res"><a href="#res" class="headerlink" title="res/"></a>res/</h4><p>res中存放的的这个应用会使用到的资源文件，例如字符串、图片、界面布局等等。它的目录结构与Android Studio中我们看到的项目工程的res目录一样。这里面的xml文件内容都是被编译器编译过的，实际它们上已经变成了二进制文件，不再是文本文件了。</p>
 <h4 id="AndroidManifest-xml"><a href="#AndroidManifest-xml" class="headerlink" title="AndroidManifest.xml"></a>AndroidManifest.xml</h4><p>AndroidManifest.xml也是被编译器处理过的文件，也是二进制文件，不再是文本文件。</p>
@@ -378,7 +380,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
