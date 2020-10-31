@@ -46,18 +46,22 @@
   };
 </script>
 
-  <meta name="description" content="上半年计划">
-<meta name="keywords" content="我的">
+  <meta name="description" content="本规范引用自A successful Git branching model">
+<meta name="keywords" content="Android">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2020计划">
-<meta property="og:url" content="http:&#x2F;&#x2F;zyflool.github.io&#x2F;2020&#x2F;02&#x2F;18&#x2F;2020%E8%AE%A1%E5%88%92&#x2F;index.html">
+<meta property="og:title" content="gitflow规范文档">
+<meta property="og:url" content="http:&#x2F;&#x2F;zyflool.github.io&#x2F;2020&#x2F;10&#x2F;31&#x2F;gitflow%E8%A7%84%E8%8C%83%E6%96%87%E6%A1%A3&#x2F;index.html">
 <meta property="og:site_name" content="小凡同学的博客">
-<meta property="og:description" content="上半年计划">
+<meta property="og:description" content="本规范引用自A successful Git branching model">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-24T09:02:24.000Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;nvie.com&#x2F;img&#x2F;git-model@2x.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;nvie.com&#x2F;img&#x2F;main-branches@2x.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;static.oschina.net&#x2F;uploads&#x2F;img&#x2F;201302&#x2F;25142848_NuIv.png">
+<meta property="og:updated_time" content="2020-10-31T12:18:49.137Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;nvie.com&#x2F;img&#x2F;git-model@2x.png">
 
-<link rel="canonical" href="http://zyflool.github.io/2020/02/18/2020%E8%AE%A1%E5%88%92/">
+<link rel="canonical" href="http://zyflool.github.io/2020/10/31/gitflow%E8%A7%84%E8%8C%83%E6%96%87%E6%A1%A3/">
 
 
 <script id="page-configurations">
@@ -69,7 +73,7 @@
   };
 </script>
 
-  <title>2020计划 | 小凡同学的博客</title>
+  <title>gitflow规范文档 | 小凡同学的博客</title>
   
 
 
@@ -183,7 +187,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://zyflool.github.io/2020/02/18/2020%E8%AE%A1%E5%88%92/">
+    <link itemprop="mainEntityOfPage" href="http://zyflool.github.io/2020/10/31/gitflow%E8%A7%84%E8%8C%83%E6%96%87%E6%A1%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -196,7 +200,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          2020计划
+          gitflow规范文档
         </h1>
 
         <div class="post-meta">
@@ -205,24 +209,18 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-02-18 17:21:16" itemprop="dateCreated datePublished" datetime="2020-02-18T17:21:16+08:00">2020-02-18</time>
+              <time title="创建时间：2020-10-31 20:17:03 / 修改时间：20:18:49" itemprop="dateCreated datePublished" datetime="2020-10-31T20:17:03+08:00">2020-10-31</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-24 17:02:24" itemprop="dateModified" datetime="2020-02-24T17:02:24+08:00">2020-02-24</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E5%88%92/" itemprop="url" rel="index">
-                    <span itemprop="name">计划</span>
+                  <a href="/categories/%E6%96%87%E6%A1%A3/" itemprop="url" rel="index">
+                    <span itemprop="name">文档</span>
                   </a>
                 </span>
             </span>
@@ -238,105 +236,54 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="上半年计划"><a href="#上半年计划" class="headerlink" title="上半年计划"></a>上半年计划</h4><a id="more"></a>
+        <p>本规范引用自<a href="https://nvie.com/posts/a-successful-git-branching-model/" target="_blank" rel="noopener">A successful Git branching model</a></p>
+<a id="more"></a>
+
+<p>下图是Git Flow的基本流程图：</p>
+<img src="https://nvie.com/img/git-model@2x.png" style="zoom:30%;" />
+
+<h4 id="分布式开发"><a href="#分布式开发" class="headerlink" title="分布式开发"></a>分布式开发</h4><p>每个人都对origin库拉代码和提交代码，每个人在开发过程中可以从子团队的其他队友那里获得代码版本变更，以最终向origin库发起一个整体的pull request。</p>
+<h4 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h4><h5 id="主分支"><a href="#主分支" class="headerlink" title="主分支"></a>主分支</h5><img src="https://nvie.com/img/main-branches@2x.png" alt="主要分支" style="zoom:40%;" />
+
+<h6 id="master"><a href="#master" class="headerlink" title="master"></a>master</h6><ul>
+<li>命名：master-xxx</li>
+<li>含义：发布的代码版本，在此分支上打tag来区分版本</li>
+<li>注意：一般主分支有且仅有一个不可以更改只可以从其他分支合并，当应用有多个不同版本（例如内部结构不同的两个项目版本）时，可以根据版本名称或特性添加后缀名</li>
+</ul>
+<h6 id="develop"><a href="#develop" class="headerlink" title="develop"></a>develop</h6><ul>
+<li>命名：develop-xxx</li>
+<li>含义：在此类分支上进行主要的开发</li>
+<li>注意：开发合并和fork主要以此类分支为准，要注意经常合并更新</li>
+</ul>
+<h5 id="辅助性分支"><a href="#辅助性分支" class="headerlink" title="辅助性分支"></a>辅助性分支</h5><h6 id="feature"><a href="#feature" class="headerlink" title="feature"></a>feature</h6><ul>
+<li>命名：feature-xxx</li>
+<li>含义：在此类支上进行特定需求或功能的开发</li>
+<li>注意：从相关的develop分支出功能分支，开发完成后要及时合并到develop分支上并进行丢弃删除<ul>
+<li>使用<code>git merge --no-ff xxx</code>命令来进行分支合并，–no-ff标志导致合并操作创建一个新的commit对象，即使该合并操作可以fast-forward。这避免了丢失这个功能分支存在的历史信息，将该功能的所有提交组合在一起。</li>
+</ul>
+</li>
+</ul>
+<h6 id="release"><a href="#release" class="headerlink" title="release"></a>release</h6><ul>
+<li>命名：realease-vn.n.n(版本号)</li>
+<li>含义：为新版本发布做准备所使用的，允许我们在最后做一些修改（如发布前的测试、调试发现的bug修改工作），</li>
+<li>注意：<ul>
+<li>从阶段开发完成的develop分支中分离出来的，最终要合并到develop和master分支上。</li>
+<li>所有后续版本要添加的feature必须要等到release分支创建以后再进行合并。</li>
+<li>真正发行版本的时候，要先把release分支合并到master分支上，并打上版本tag。</li>
+<li>完成对develop分支和master分支的合并之后，删除当前的release分支</li>
+</ul>
+</li>
+</ul>
+<h6 id="hotfix"><a href="#hotfix" class="headerlink" title="hotfix"></a>hotfix</h6><img src="http://static.oschina.net/uploads/img/201302/25142848_NuIv.png" style="zoom:60%;" />
 
 <ul>
-<li>日常任务：刷题，leetcode一周4+道<table>
-<tr>
-  <td> </td>
-  <td>计划</td>
-  <td>实际完成情况</td>
-</tr>
-<tr>
-  <td> 第二周(2.17-2.23) </td>
-  <td rowspan ="3" >
-      完成工作台移动端现有页面的完善工作<br/>
-      AsyncTask收尾<br/>
-      学习Gradle
-  </td>
-  <td></td>
-</tr>
-<tr>
-  <td>第三周(2.24-3.1)  </td>
-  <td></td>
-</tr>
-<tr>
-  <td>第四周(3.2-3.8) </td>
-  <td></td>
-</tr>
-<tr>
-  <td>第五周(3.9-3.15) </td>
-  <td rowspan = "3">
-      写项目<br/>
-      学习Jetpack<br/>
-      设计模式
-  </td>
-  <td></td>
-</tr>
-<tr>
-  <td>第六周(3.16-3.22)</td>
-  <td></td>
-</tr>
-<tr>
-  <td>第七周(3.23-3.29)</td>
-  <td></td>
-</tr>
-<tr>
-  <td>第八周(3.30-4.5)</td>
-  <td rowspan = "4">
-      写项目<br/>
-      CSAPP C8<br/>
-      学Kotlin<br/>
-  </td>
-  <td></td>
-</tr>
-<tr>
-  <td>第九周(4.6-4.12)</td>
-  <td></td>
-</tr>
-<tr>
-  <td>第十周(4.13-4.19)</td>
-  <td></td>
-</tr>
-<tr>
-  <td>第十一周(4.20-4.26)</td>
-  <td></td>
-</tr>
-<tr>
-  <td>第十二周(4.27-5.3)</td>
-  <td rowspan= "5">
-      写项目<br/>
-      看源码(okhttp/Retrofit或者别的什么)<br/>
-      MVVM</br>
-      Android底层机制（启动、系统架构）
-  </td>
-  <td></td>
-</tr>
-<tr>
-  <td>第十三周(5.4-5.10)</td>
-  <td></td>
-</tr>
-<tr>
-  <td>第十四周(5.11-5.17)</td>
-  <td></td>
-</tr>
-<tr>
-  <td>第十五周(5.18-5.24)</td>
-  <td></td>
-</tr>
-<tr>
-  <td>第十六周(5.25-5.31)</td>
-  <td></td>
-</tr>
-<tr>
-  <td>暑假</td>
-  <td>
-      性能优化</br>
-      热修复什么的技术
-  </td>
-  <td></td>
-</tr>
-</table></li>
+<li>命名：hotfix-vn.n.n(版本号)</li>
+<li>含义：与release分支很相似，但是hotfix分支是未经计划的版本更新，可能是由于异常状态或者是某些马上需要修复的缺陷</li>
+<li>注意：<ul>
+<li>完成一个bugfix之后，需要把butfix合并到master(打tag)和develop分支去</li>
+<li>如果一个release分支已经存在，那么应该把hotfix合并到这个release分支，而不是合并到develop分支</li>
+</ul>
+</li>
 </ul>
 
     </div>
@@ -347,7 +294,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E6%88%91%E7%9A%84/" rel="tag"># 我的</a>
+              <a href="/tags/Android/" rel="tag"># Android</a>
           </div>
 
         
@@ -356,13 +303,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/01/17/%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E8%AE%A1%E5%88%92/" rel="prev" title="这是一个计划">
-      <i class="fa fa-chevron-left"></i> 这是一个计划
+    <a href="/2020/10/23/Wakeup%E8%AF%BE%E7%A8%8B%E8%A1%A8%E5%AF%BC%E5%85%A5%E8%AF%BE%E8%A1%A8%E6%8A%80%E6%9C%AF%E5%88%86%E6%9E%90/" rel="prev" title="Wakeup课程表导入课表技术分析">
+      <i class="fa fa-chevron-left"></i> Wakeup课程表导入课表技术分析
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/02/22/%E6%B3%9B%E5%9E%8B%E5%9F%BA%E7%A1%80/" rel="next" title="泛型基础">
-      泛型基础 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -422,7 +366,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#上半年计划"><span class="nav-number">1.</span> <span class="nav-text">上半年计划</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#分布式开发"><span class="nav-number">1.</span> <span class="nav-text">分布式开发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分支"><span class="nav-number">2.</span> <span class="nav-text">分支</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#主分支"><span class="nav-number">2.1.</span> <span class="nav-text">主分支</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#master"><span class="nav-number">2.1.1.</span> <span class="nav-text">master</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#develop"><span class="nav-number">2.1.2.</span> <span class="nav-text">develop</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#辅助性分支"><span class="nav-number">2.2.</span> <span class="nav-text">辅助性分支</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#feature"><span class="nav-number">2.2.1.</span> <span class="nav-text">feature</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#release"><span class="nav-number">2.2.2.</span> <span class="nav-text">release</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#hotfix"><span class="nav-number">2.2.3.</span> <span class="nav-text">hotfix</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
