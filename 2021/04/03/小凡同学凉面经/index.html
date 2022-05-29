@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zyflool.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="本人考完试就忘题，虽然面完就开始回想记录问题了，但是题目顺序也都记不清了，所以下面的顺序都是乱的，就看个大概吧。 字节跳动 教育架构部门 3.26一面（40mins左右）自我介绍 看我项目好多都提到 上来就直接问了MVP和MVVM的区别 Java：泛型 HashMap源码看过吗？ 列表和数组的区别【没什么逻辑瞎讲一通，hr最后还帮我捋思路】 接口和抽象类的区别 线程和进程的区别【资源分配单位、系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小凡同学凉面经">
+<meta property="og:url" content="http://zyflool.github.io/2021/04/03/%E5%B0%8F%E5%87%A1%E5%90%8C%E5%AD%A6%E5%87%89%E9%9D%A2%E7%BB%8F/index.html">
+<meta property="og:site_name" content="小凡同学的博客">
+<meta property="og:description" content="本人考完试就忘题，虽然面完就开始回想记录问题了，但是题目顺序也都记不清了，所以下面的顺序都是乱的，就看个大概吧。 字节跳动 教育架构部门 3.26一面（40mins左右）自我介绍 看我项目好多都提到 上来就直接问了MVP和MVVM的区别 Java：泛型 HashMap源码看过吗？ 列表和数组的区别【没什么逻辑瞎讲一通，hr最后还帮我捋思路】 接口和抽象类的区别 线程和进程的区别【资源分配单位、系统">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-03T04:00:00.000Z">
+<meta property="article:modified_time" content="2022-05-29T01:19:46.107Z">
+<meta property="article:author" content="zyflool">
+<meta property="article:tag" content="面试">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://zyflool.github.io/2021/04/03/%E5%B0%8F%E5%87%A1%E5%90%8C%E5%AD%A6%E5%87%89%E9%9D%A2%E7%BB%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>小凡同学凉面经 | 小凡同学的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小凡同学的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zyflool.github.io/2021/04/03/%E5%B0%8F%E5%87%A1%E5%90%8C%E5%AD%A6%E5%87%89%E9%9D%A2%E7%BB%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zyflool">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小凡同学的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          小凡同学凉面经
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-03 12:00:00" itemprop="dateCreated datePublished" datetime="2021-04-03T12:00:00+08:00">2021-04-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-29 09:19:46" itemprop="dateModified" datetime="2022-05-29T09:19:46+08:00">2022-05-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%88%91%E7%9A%84/" itemprop="url" rel="index"><span itemprop="name">我的</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本人考完试就忘题，虽然面完就开始回想记录问题了，但是题目顺序也都记不清了，所以下面的顺序都是乱的，就看个大概吧。</p>
+<h2 id="字节跳动-教育架构部门-3-26"><a href="#字节跳动-教育架构部门-3-26" class="headerlink" title="字节跳动 教育架构部门 3.26"></a>字节跳动 教育架构部门 3.26</h2><h3 id="一面（40mins左右）"><a href="#一面（40mins左右）" class="headerlink" title="一面（40mins左右）"></a>一面（40mins左右）</h3><p>自我介绍</p>
+<p>看我项目好多都提到 上来就直接问了MVP和MVVM的区别</p>
+<h4 id="Java："><a href="#Java：" class="headerlink" title="Java："></a>Java：</h4><p>泛型 HashMap源码看过吗？ 列表和数组的区别【没什么逻辑瞎讲一通，hr最后还帮我捋思路】</p>
+<p>接口和抽象类的区别</p>
+<p>线程和进程的区别【资源分配单位、系统调度单位】 那线程间的资源是怎么共享的呢？</p>
+<p>创建一个线程的方法【继承Thread、实现Runnable、实现Callable+Future】，那方法之间有什么区别呢？</p>
+<p>synchronized关键字 重入锁 volatile关键字</p>
+<h4 id="Android："><a href="#Android：" class="headerlink" title="Android："></a>Android：</h4><p>Activity的生命周期，从Activity A 跳转到Activity B中间的二者的生命周期变化，Activity里打开一个Dialog对Activity生命周期有影响吗【没有影响，没想过这点所以当时是猜的】</p>
+<p>AsyncTask Handler消息机制 Service【只知道皮毛所以没细问】</p>
+<p>Service【没什么了解所以没细问】</p>
+<p>数据库的升级方式（比如在表里加一个字段）</p>
+<p>Room的实现方式【包装SQLite】</p>
+<h4 id="网络："><a href="#网络：" class="headerlink" title="网络："></a>网络：</h4><p>七层网络模型 TCP、IP协议都是哪层的？</p>
+<p>UDP和TCP的区别 讲到UDP不面向连接，那UDP是怎么传送的呢？ TCP的三次握手？</p>
+<p>HTTP了解吗 HTTP1.0和2.0的区别 HTTP和HTTPS的区别</p>
+<h4 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h4><p>反转k链表</p>
+<p>看我代码 思路是对的 然后什么地方可以简化一下</p>
+<blockquote>
+<p>挂了</p>
+</blockquote>
+<h2 id="百度贴吧-3-27"><a href="#百度贴吧-3-27" class="headerlink" title="百度贴吧 3.27"></a>百度贴吧 3.27</h2><p>三轮面试是连着一起面的 一二面中间等了得有半个小时</p>
+<h3 id="一面（40mins左右）-1"><a href="#一面（40mins左右）-1" class="headerlink" title="一面（40mins左右）"></a>一面（40mins左右）</h3><p>自我介绍</p>
+<h4 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h4><p>Java有哪些基本数据类型？那和String这样的类有什么区别？&#x3D;&#x3D;和equals()方法的区别</p>
+<p>Java的泛型的作用？</p>
+<p>static修饰符的作用？static修饰的方法可以访问普通成员变量吗？为什么不可以？</p>
+<p>垃圾回收机制知道吗【不知道就给他讲强软弱虚四种引用】</p>
+<p>HashMap实现方式【没看源码就大概讲了一下是数组实现的】</p>
+<p>内存的分区【没讲清楚】 内存是编译器释放的还是代码释放的？</p>
+<h4 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h4><p>进程和线程的区别？线程的状态都有哪些？</p>
+<p>死锁是什么？有接触过吗？【没有就没细问】</p>
+<h4 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h4><p>七层网络模型</p>
+<p>HTTP的传输方式</p>
+<p>HTTP和HTTPS的区别【加密协议】 那是怎么加密的呢？</p>
+<p>在项目里用HTTP还是HTTPS，遇到过HTTP请求吗【不太记得具体问题了 就是讲了讲在项目里加设置强制进行HTTP不安全请求】</p>
+<p>GET和POST的区别【用处和数据量】（hr提示两个@Query和@Body注释不一样）</p>
+<p>TCP和UDP的区别 TCP是哪层的 TCP的三次握手</p>
+<h4 id="算法和数据结构"><a href="#算法和数据结构" class="headerlink" title="算法和数据结构"></a>算法和数据结构</h4><p>数组、链表、栈、队列的区别</p>
+<p>知道时空复杂度吗？冒泡排序的空间复杂度？【O(1)】快速排序最好情况下的时间复杂度【O(nlogn)】</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><p>插入链表的操作（只写操作代码）</p>
+<p>用位运算判断数的奇偶（只写操作代码）</p>
+<p>不添加新变量交换两个变量的值（只写操作代码）【加减或者位运算】</p>
+<p>二叉树都有什么遍历方式【前中后】知道层序遍历吗？写一段层序遍历二叉树的代码</p>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p>看到简历上提到了Git，问Git用过什么命令？看我只会用就没往下问</p>
+<h3 id="二面（40mins左右）"><a href="#二面（40mins左右）" class="headerlink" title="二面（40mins左右）"></a>二面（40mins左右）</h3><p>自我介绍</p>
+<p>MVP和MVVM的区别</p>
+<p>DataBinding的实现方式？</p>
+<p>看简历上面提到的WebView和H5的交互怎么实现的？</p>
+<p>知道多少本地数据管理的工具？</p>
+<p>用什么系统开发的？Linux命令行熟悉吗？</p>
+<p>Git是用图形化界面吗？</p>
+<p>简历提到匣子的两代项目 问了下项目迭代问题 其实只是两个分离的项目</p>
+<p>组件化知道吗？知道什么路由框架吗？怎么实现的路由？</p>
+<p>算法题： 二叉树求根到叶子结点路径和为sum的路径集合</p>
+<h3 id="三面（20mins左右）"><a href="#三面（20mins左右）" class="headerlink" title="三面（20mins左右）"></a>三面（20mins左右）</h3><p>自我介绍</p>
+<p>职业规划</p>
+<p>项目中有遇到什么难题吗 怎么解决的</p>
+<p>遇到问题的解决思路？【搜索引擎 向其他人求助】（要独立思考）</p>
+<p>然后就是问他问题</p>
+<p>其实大部分时间都是在聊 hr没有问什么问题</p>
+<blockquote>
+<p>已收百度贴吧offer</p>
+</blockquote>
+<h2 id="美团优选-3-29"><a href="#美团优选-3-29" class="headerlink" title="美团优选 3.29"></a>美团优选 3.29</h2><h3 id="一面（40mins左右）-2"><a href="#一面（40mins左右）-2" class="headerlink" title="一面（40mins左右）"></a>一面（40mins左右）</h3><p>没有自我介绍 上来就做题 “合并两个有序数组到一个数组里”（从后向前遍历）</p>
+<p>问了说两个数组升序降序都不清楚所以我分四类写 完了hr说整体思路是对的 就是重复代码挺多的应该可以简化</p>
+<h4 id="网络-1"><a href="#网络-1" class="headerlink" title="网络"></a>网络</h4><p>TCP是哪一层的</p>
+<p>TCP和UDP的区别</p>
+<p>TCP是怎么建立连接的 讲三次握手</p>
+<p>为什么要三次？两次不行吗？【重复数据包的发送会造成问题】 hr应该是觉得我不是很清楚里面的逻辑 就深入问了一下两次握手里客户端重复发送申请数据包和服务端重复发送确认数据包的后果</p>
+<h4 id="系统"><a href="#系统" class="headerlink" title="系统"></a>系统</h4><p>垃圾回收知道吗【没讲清就没细问】</p>
+<p>线程和进程的区别</p>
+<p>线程进程所持有的资源存放在哪里？【说实话没明白问题点在哪里】</p>
+<p>Windows和Linux MacOs系统间线程的区别【我讲不出来说自己专业没学这么细 就没有再往后问了】</p>
+<h4 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h4><p>MVVM</p>
+<p>DataBinding的作用、怎么实现的</p>
+<p>Jetpack了解多少【讲了点皮毛就没再往下问】</p>
+<p>Android里什么操作不在主线程里【数据库、网络请求】 为什么不让在主线程里操作？【耗时 会卡 提到了ANR】 那什么是ANR，全称是什么知道吗？【ANR全称不知道】 Android都有哪些线程？</p>
+<p>知道什么设计模式吗？【讲单例模式】那用代码写一个单例模式【写了一个简单的】还有别的实现方式吗？【提到了可以加synchronized保证线程安全】那synchronized作用是什么呢？</p>
+<blockquote>
+<p>挂了</p>
+</blockquote>
+<h2 id="京东"><a href="#京东" class="headerlink" title="京东"></a>京东</h2><h3 id="初试-电面-4-7（20mins）"><a href="#初试-电面-4-7（20mins）" class="headerlink" title="初试 电面 4.7（20mins）"></a>初试 电面 4.7（20mins）</h3><p>Activity的生命周期都有哪些？平时有使用过这些生命周期的方法吗，怎么使用的？按Home键退出再返回经历的生命周期？</p>
+<p>Fragment的生命周期有哪些？和Activity的生命周期有什么关系？</p>
+<p>有了解过JNI、NDK吗？知道怎么在Java代码里调用C++吗？</p>
+<p>用过RxJava，简单介绍一下？</p>
+<p>用过Retrofit，简单介绍一下？还知道其他的网络库吗？有什么不同吗？</p>
+<p>对编程的看法和理解【pilibala讲】（hr觉得我讲的没有突出我的优势来，只是在说编程多么多么好。。）</p>
+<p>对京东有什么了解吗？</p>
+<blockquote>
+<p>挂了</p>
+</blockquote>
+<h2 id="腾讯"><a href="#腾讯" class="headerlink" title="腾讯"></a>腾讯</h2><h3 id="一面-4-12（1h10mins）"><a href="#一面-4-12（1h10mins）" class="headerlink" title="一面 4.12（1h10mins）"></a>一面 4.12（1h10mins）</h3><p>时间太长了，问得好深，把人整自闭了</p>
+<h4 id="Android-1"><a href="#Android-1" class="headerlink" title="Android"></a>Android</h4><p>让我选一个项目来讲，选的工作台项目，大致介绍了一下项目功能和我负责的部分，大致的页面是什么样子的。</p>
+<p>【我的界面实现里用了RecyclerView】RecyclerView的加载机制？item是怎么复用的，如果不是一个类型的item会怎么复用？</p>
+<p>简历里提到了与H5交互，问具体怎么调用Js方法，Js怎么调用Java方法，具体实现。</p>
+<p>有了解过WebView的优化【或者是加载？】吗？【没有具体了解就没往下问】</p>
+<p>简历的项目难点里提到了使用View.post()方法，简单介绍一下。【讲实际使用的问题和解决思路】</p>
+<p>View的绘制流程和Activity的生命周期的关系。</p>
+<p>那加入的消息队列是主线程的消息队列吗？为什么是主线程的？为什么主线程就有消息队列可以直接用？</p>
+<p>讲一下Handler消息机制；Handler是怎么切换线程的</p>
+<p>知道进程间通信的方式有哪些吗？【答Binder，后续有提深入的问题，不了解就没往下问了】</p>
+<p>中间有一个关于操作系统的问题 没学过就忘记了【解释了一通自己专业不是很对口，吐槽hr居然以为信管是电子通信？？？】</p>
+<h4 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h4><p>浏览器上输入一个网址到显示网页中间的过程有哪些？</p>
+<p>HTTPs的加密流程，中间交流的时候都使用的是非对称加密算法吗？数字证书是什么？</p>
+<p>HTTP1.0和HTTP2.0的区别？【提到多路复用】什么是多路复用？【瞎解释一通】他怎么也听不懂，让我讲细一点，从发送多个请求到接受多个请求都是怎么复用的讲清楚</p>
+<p>TCP和UDP的区别</p>
+<p>TCP的三次握手 为什么要握三次？【给他讲半天重复发送 重复发送怎么也没讲清楚，是我的问题吗 ？？？】</p>
+<p>TCP的拥塞控制和重发</p>
+<h4 id="多线程-1"><a href="#多线程-1" class="headerlink" title="多线程"></a>多线程</h4><p>进程和线程的区别</p>
+<p>了解哪些锁？【乐观、悲观锁，可重入锁…】什么是悲观锁&#x2F;乐观锁，有什么例子？</p>
+<p>synchronized是什么锁？</p>
+<p>volatile是乐观锁吗？volatile的实现原理？volatile用在哪里？【单例模式的双重检验模式的单例对象上】怎么实现的？既然有synchronized加锁为什么还要volatile修饰？</p>
+<p>什么是死锁？手写一个死锁。</p>
+<p>看代码问wait()和sleep()的区别？</p>
+<p>算法题：最长不重复子串。【看我在那愣了半天，就让我先讲思路，我没想法就只说了暴力遍历】那暴力遍历的时间复杂度是多少？（友善地提醒我用滑动窗口）</p>
+<p>写完看我代码，有一层循环不是必要的，问我循环干啥？一直就给他解释不清楚，最后得出结论，这个可以省去，不是必要的循环。</p>
+<p>不加思考问评价【说实话我都不想问了，很早之前就开始想say bye了，中间面一半就已经自闭了】</p>
+<p>整个过程其实就是提出一个问题，然后根据一个问题展开、深挖，最后挖到我自闭。。。</p>
+<p>中间有好多问题都忘记了，因为被问懵了。。。</p>
+<p>流程结束了。。。意向部门和不服从城市调剂填了都白填，把你捞出来烤糊发现拿错了再把你放回去。。。</p>
+<h2 id="网易有道"><a href="#网易有道" class="headerlink" title="网易有道"></a>网易有道</h2><h3 id="一面-4-12（40mins）"><a href="#一面-4-12（40mins）" class="headerlink" title="一面 4.12（40mins）"></a>一面 4.12（40mins）</h3><p>一开始网络不行，后来直接打电话过来电面提问了。</p>
+<p>自我介绍</p>
+<p>讲最近一个项目匣子3.0，简单介绍项目架构和功能实现方式，负责什么部分的内容</p>
+<p>什么是MVVM？LiveData的功能？</p>
+<p>依赖注入是干什么用的？有什么好处？</p>
+<p>Retrofit介绍一下，是怎么把请求到的数据解析成对象的？</p>
+<p>Activity生命周期讲一下 Activity A跳转到Activity B中间经历的生命周期有哪些？</p>
+<p>View的绘制 onMeasure中的specMode有哪些？分别表示什么？</p>
+<p>View的事件分发机制 实际实现一个下拉刷新布局怎么解决滑动冲突</p>
+<p>写一个单例模式的实现【写了双重检验锁方式的】解释代码如何实现单例 为什加volatile修饰单例对象？为什么要前后两次判空？</p>
+<p>有哪些锁？synchronized和Lock的区别？sychronized为什么是重量级锁？</p>
+<p>线程池创建线程的方法中参数的含义？</p>
+<p>代码：查找链表中有没有环，有环则输出环的入口。写完讲实现思路</p>
+<p>问实习时间</p>
+<p>没有提问环节</p>
+<h3 id="二面-4-25（25mins）"><a href="#二面-4-25（25mins）" class="headerlink" title="二面 4.25（25mins）"></a>二面 4.25（25mins）</h3><p>可等死我了。。。</p>
+<p>第二次出现网络问题了，严重怀疑网易大楼的wifi不太给力。。。</p>
+<p>自我介绍</p>
+<p>项目里遇到的困难，怎么解决的，学习到了什么。</p>
+<p>View.post()调用后runnable的执行顺序？如果在代码里new一个View调用post方法，其中的runnable会被调用吗？</p>
+<p>handler的postDelay方法怎么实现时延的？添加时延的任务时放到消息队列的哪个地方？</p>
+<p>Android如何与Js交互？交互在Android低版本上又出现什么问题吗？【不知道低版本的问题】那项目开发的版本是多少？</p>
+<p>LinkedHashMap的内部数据结构，其中单个节点内的数据包括哪些？</p>
+<p>HashMap的扩容会导致已经保存的数据重新调整吗？HashMap中put一个键值对的流程？每次扩容重新调整内部数据会很耗时？</p>
+<p>在一个TextView上调用setText()方法，然后再调用get它的长宽，能获取到最新的实际大小吗？一定不能还是可能不能呢？setText()后执行的绘制和View的基本绘制流程有什么不同吗？</p>
+<p>写项目一般多少人？</p>
+<p>git上面分支A和分支B，想要只把分支A上的最近一次记录合并到分支B上，怎么做？</p>
+<p>计算机网络的分层模型 数据链路层的作用？有什么协议？</p>
+<p>传输层和网络层的区别？</p>
+<p>问实习时间</p>
+<p>让我问问题</p>
+<p>（没有写代码题）</p>
+<blockquote>
+<p>过了，网易有道词典学习教育部门的开发。</p>
+</blockquote>
+<h2 id="快手-平台架构部门"><a href="#快手-平台架构部门" class="headerlink" title="快手 平台架构部门"></a>快手 平台架构部门</h2><h3 id="一面-4-13（50mins）"><a href="#一面-4-13（50mins）" class="headerlink" title="一面 4.13（50mins）"></a>一面 4.13（50mins）</h3><p>自定义View中自定义属性怎么实现的</p>
+<p>如何在编写布局的时候加入预览内容</p>
+<p>使用过相对布局吗？</p>
+<p>用过哪些列表控件？RecyclerView如何进行局部刷新？有遇到过横向纵向列表的滑动冲突吗？有使用过RecyclerView嵌套Fragment吗？</p>
+<p>了解过ArrayMap吗？HashMap线程安全吗？怎么线程不安全的？</p>
+<p>静态内部类和非静态内部类的区别【提到了内存泄漏】</p>
+<p>Handler在Activity中如何避免内存泄漏</p>
+<p>静态Handler对象在处理事务时需要Activity对象 如何避免使用时Activity被回收（用弱引用）</p>
+<p>什么是弱引用？有什么作用？其他的引用类型？</p>
+<p>View的绘制的大致流程 ViewGroup和View在Measure部分的区别是什么？</p>
+<p>RxJava一般用来做什么？</p>
+<p>介绍一下Retrofit？怎么使用？如何判断请求成功？HTTP code 200什么含义？3打头是什么含义？</p>
+<p>kotlin语言如何实现懒加载？</p>
+<p>代码：删除链表上的倒数第K个节点。</p>
+<h3 id="二面-4-15-（50mins）"><a href="#二面-4-15-（50mins）" class="headerlink" title="二面 4.15 （50mins）"></a>二面 4.15 （50mins）</h3><p>我终于记起来录音了，不过回听真的是大型社死现场，我为什么讲得东西都那么扯？</p>
+<p>Handler的postDelay方法是怎么实现延时的？</p>
+<p>简单介绍一下Handler的相关类？</p>
+<p>有接触过哪些Jetpack框架？【提到了Room】Room是如何对sqlite进行封装的？</p>
+<p>【提到了Jetpack的ViewModel】MVP和MVVM的区别？</p>
+<p>使用rxjava做什么呢？【有提到说常用调换线程的两个操作】observeOn和subscribeOn方法前后执行顺序有要求吗？为什么在工作线程进行的网络请求可以在主线程去响应，rxjava如何实现的这样的情景？</p>
+<p>除了网络请求还用rxjava做过什么？【提到自己在进行请求的时候需要合并同步】在这个情景下如果不用rxjava使用硬编码怎样实现同样功能？</p>
+<p>有看过哪些开发相关的书？</p>
+<p>了解什么设计模式吗？【有提到建造者模式】手写一个建造者模式</p>
+<p>用过哪些图片加载库？</p>
+<p>LinkedHashMap和HashMap的区别？</p>
+<p>下面这段代码的结果是什么？为什么？【提到说如果加修饰符会不一样】给i添加synchronized volatile关键字会有什么不同？synchronized和volatile都是什么锁？什么是阻塞？</p>
+<p>int i &#x3D; 100<br>Thread a, b<br>a 100 i++<br>b 100 i—<br>代码：输出两个等长字符串中相同、连续的最长子串。</p>
+<blockquote>
+<p>挂了</p>
+</blockquote>
+<h2 id="字节跳动-支付业务部门"><a href="#字节跳动-支付业务部门" class="headerlink" title="字节跳动 支付业务部门"></a>字节跳动 支付业务部门</h2><h3 id="一面-4-16（1h）"><a href="#一面-4-16（1h）" class="headerlink" title="一面 4.16（1h）"></a>一面 4.16（1h）</h3><blockquote>
+<p>我胡汉三又回来了哈哈哈哈</p>
+</blockquote>
+<p>用过哪些kotlin特性？</p>
+<p>有用过高级函数吗？【基本没了解过就没往下问了】</p>
+<p>Java的四种引用类型？有用过弱引用吗？</p>
+<p>Java的静态变量存放在哪里？</p>
+<p>程序计数器是什么？</p>
+<p>有用过多线程吗？怎么用的？【提到Retrofit+RxJava】使用RxJava进行异步请求吗？Retrofit有自己的异步操作为什么不使用它自己的异步方法？</p>
+<p>有自己在项目里实现多线程吗？创建线程的方法有哪些？【好像是说的时候不小心说到调用Thread的run()方法启动线程了，所以后面重新问了我】Runnable的run()和Thread的start()方法有什么不同吗？调用run()可以开启线程吗？</p>
+<p>Callable和Runnable的实现方式有什么区别吗？【可以有返回值】那只用Runnable怎么实现返回值呢？【说用一个static变量然后一直while检查它有没有变化，但是后来hr提示说这种方法会阻塞线程不太好，所以又说用回调方法，但是hr说想要从主线程了解到它的返回值而不是说子线程完成了提醒主线程，所以又说用Thread的join()方法等待对方线程完成任务后返回到调用join方法的这个位置继续执行】join()方法的作用？调用join()方法后两个线程的状态分别是什么样的？怎么保证多个线程读写同一个变量的线程安全？【加volatile】volatile的作用有哪些？原子性是什么？怎么保证多个线程写同一个变量不会被覆盖？【使用synchronized】使用synchronized修饰静态方法和非静态方法有什么区别？</p>
+<p>线程池用过吗？创建线程池的方法参数有哪些？核心线程数和最大线程数的关系？</p>
+<p>有用过泛型吗？知道什么是类型擦除吗？有类型擦除为什么在向列表里插入非预定类型的对象会报错呢？泛型的上下边界？</p>
+<p>二叉树的遍历方法？做题：给定一组前序遍历和中序遍历序列，写出它的后序遍历。</p>
+<p>HashMap为什么是线程不安全的？HashMap的索引是用什么？【哈希值】key的哈希值是怎么计算的？知道HashMap的扩容方法吗？HashMap的存储结构是什么样子的？红黑树是什么？</p>
+<p>了解各种字符编码规则吗？比如UTF-8、unicode、ASCII码，他们之间的区别？</p>
+<p>Https怎么保证安全性的？用的什么加密算法？对称算法和非对称算法的区别？https的握手流程？建立https连接后的传输是对称的还是非对称的？</p>
+<p>SharedPreference的commit和apply方法有什么区别？</p>
+<p>序列化是怎么实现的？Serializable和Parcelable的区别？哪个性能比较好？为什么？</p>
+<p>用过哪些图片加载库？知道他的加载机制吗？</p>
+<p>看过哪些第三方库的源码？</p>
+<p>团队人数？</p>
+<p>git的常用方法？知道fetch和pull的区别吗？</p>
+<p>代码：顺时针打印一个二维数组</p>
+<blockquote>
+<p>估计还是要凉，前半部分还好后面好多不会，不过还是比头一次强很多了，呜呜呜…</p>
+<p>挂个人需要这么久吗？不要我就放我进下一个岗位吧，啊～</p>
+<p>特意发了邮件去问，结果还是让我等，我等。。。</p>
+</blockquote>
+<h2 id="联想-智慧家居"><a href="#联想-智慧家居" class="headerlink" title="联想 智慧家居"></a>联想 智慧家居</h2><h3 id="一面-4-26-（21mins）"><a href="#一面-4-26-（21mins）" class="headerlink" title="一面 4.26 （21mins）"></a>一面 4.26 （21mins）</h3><blockquote>
+<p>吐槽：说好要用Microsoft Teams面试，在Mac上整了半天软件一直卡顿登不进去，然后又换Windows系统重新整，结果到点面试官那边调了半天听不到他声音，还是用的微信电话面的。。。</p>
+</blockquote>
+<p>自我介绍</p>
+<p>Java中的基本数据类型，各自占用字节数。</p>
+<p>.java文件是怎么编译执行的，在apk中的存在形式是什么样的？</p>
+<p>Anrdoid项目内文件结构？工程gradle和app的gradle的用法区别？</p>
+<p>依赖库所依赖的库和本库依赖的库相同会造成什么影响？</p>
+<p>gradle添加依赖的各种方法区别？</p>
+<p>讲一个熟悉的项目，是团队开发还是独立开发？负责什么部分的工作？</p>
+<p>讲工作台里面进度编辑页的业务逻辑？Android和Js交互的具体细节。</p>
+<p>View.post()的方法执行内部流程？为什么使用post就可以保证正常？为什么要post不直接执行一个Runnable？为什么不做数据缓存和恢复？在其他项目里有做过数据的临时缓存和恢复吗？</p>
+<p>在项目中使用RxJava的场景？常用方法？</p>
+<p>Retrofit有和其他库结合使用吗？Retrofit和OkHttp的关系？</p>
+<p>了解Jetpack哪些？用过哪些？</p>
+<p>用过哪些图片加载库？加载机制了解吗？</p>
+<p>提问环节</p>
+<p>（没有代码）</p>
+<blockquote>
+<p>他随便面面，我也随便面面。。。</p>
+</blockquote>
+<h2 id="美团-闪购部门"><a href="#美团-闪购部门" class="headerlink" title="美团 闪购部门"></a>美团 闪购部门</h2><h3 id="一面-4-29-（40mins）"><a href="#一面-4-29-（40mins）" class="headerlink" title="一面 4.29 （40mins）"></a>一面 4.29 （40mins）</h3><blockquote>
+<p>不一样真的不一样，这个面试官比上一次那个好太多了呜呜呜，简直温柔小哥哥。</p>
+</blockquote>
+<p>自我介绍</p>
+<p>kotlin比Java有哪些好的地方？kotlin对于空指针的管理</p>
+<p>HTTP和HTTPS的关系？什么是对称加密、非对称加密？用私钥加密公钥解密可以吗？</p>
+<p>HTTP的状态码有哪些？</p>
+<p>TCP和UDP的区别？</p>
+<p>线程和进程的区别？一个进程可以拥有多个线程吗？进程之间怎么通信？（操作系统层次上的）</p>
+<p>死锁是什么？</p>
+<p>数组和链表的区别？</p>
+<p>equals和hashCode的关系？equals相同hashCode一定相同吗？hashCode相同equals一定相同吗？</p>
+<p>MVP比MVC有哪些优化？</p>
+<p>MVVM中LiveData的功能？</p>
+<p>Android的消息机制？</p>
+<p>Android四大组件有哪些？</p>
+<p>Activity的生命周期？</p>
+<p>有哪些常用布局？约束布局有哪些优点？</p>
+<p>算法题：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Goods</span> &#123;</span><br><span class="line">    <span class="comment">/*商品名称*/</span></span><br><span class="line">    String name;</span><br><span class="line">    <span class="comment">/*属性列表*/</span></span><br><span class="line">    List&lt;String&gt; attrList;</span><br><span class="line">    <span class="comment">/*商品数量*/</span></span><br><span class="line">    <span class="type">int</span> count;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MergeUtil</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> List&lt;Goods&gt; <span class="title function_">mergeGoods</span><span class="params">(List&lt;Goods&gt; goodsList)</span> &#123;</span><br><span class="line">        <span class="comment">//合并商品</span></span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">合并商品：如果名称和属性列表相同，合并数量。</span></span><br><span class="line"><span class="comment">例如：</span></span><br><span class="line"><span class="comment">	红富士 【很甜，很红，品相好】 2</span></span><br><span class="line"><span class="comment">	红富士 【很红，很甜，品相好】 10</span></span><br><span class="line"><span class="comment">	红富士 【很红，品相好】 12</span></span><br><span class="line"><span class="comment">	小金苹果 【很甜，品相好】 4</span></span><br><span class="line"><span class="comment">合并后：</span></span><br><span class="line"><span class="comment">	红富士 【很甜，很红，品相好】 12</span></span><br><span class="line"><span class="comment">	红富士 【很红，品相好】 12</span></span><br><span class="line"><span class="comment">	小金苹果 【很甜，品相好】 4</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">没有多想就用了双重循环判断，面试官说可以用Map优化一下循环提高效率。</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>提问环节。【ps：同样的公司，同一个问题，回答风格完全就不一样了，呵】</p>
+<blockquote>
+<p>刚刚通知了明天面试，嘿</p>
+</blockquote>
+<hr>
+<p>一些os：一开始就想着一定要去北京然后留下来，所以投简历的时候拼多多、OPPO、闲鱼什么的考都没考虑（连最初的梦想网易云音乐也放弃了呜呜），后来在面试中间被大公司的杭州、深圳的部门捞出来想面试，给了下一轮的机会可是就因为工作地点原因我就都拒了，盒马的hr还问我“怎么就不想来杭州呢”。其实我也不知道固定目标的工作城市好不好，可能我会因为我这个固执的点丢掉很多很好的机会吧，谁知道呢。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"># 面试</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/12/12/Java%E5%9B%9E%E8%B0%83%E6%9C%BA%E5%88%B6/" rel="prev" title="Java回调机制">
+      <i class="fa fa-chevron-left"></i> Java回调机制
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8-%E6%95%99%E8%82%B2%E6%9E%B6%E6%9E%84%E9%83%A8%E9%97%A8-3-26"><span class="nav-number">1.</span> <span class="nav-text">字节跳动 教育架构部门 3.26</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E9%9D%A2%EF%BC%8840mins%E5%B7%A6%E5%8F%B3%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">一面（40mins左右）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java%EF%BC%9A"><span class="nav-number">1.1.1.</span> <span class="nav-text">Java：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Android%EF%BC%9A"><span class="nav-number">1.1.2.</span> <span class="nav-text">Android：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%EF%BC%9A"><span class="nav-number">1.1.3.</span> <span class="nav-text">网络：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-number">1.1.4.</span> <span class="nav-text">代码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BE%E5%BA%A6%E8%B4%B4%E5%90%A7-3-27"><span class="nav-number">2.</span> <span class="nav-text">百度贴吧 3.27</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E9%9D%A2%EF%BC%8840mins%E5%B7%A6%E5%8F%B3%EF%BC%89-1"><span class="nav-number">2.1.</span> <span class="nav-text">一面（40mins左右）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java"><span class="nav-number">2.1.1.</span> <span class="nav-text">Java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.1.2.</span> <span class="nav-text">多线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C"><span class="nav-number">2.1.3.</span> <span class="nav-text">网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%92%8C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">2.1.4.</span> <span class="nav-text">算法和数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">2.1.5.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">2.1.6.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E9%9D%A2%EF%BC%8840mins%E5%B7%A6%E5%8F%B3%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">二面（40mins左右）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E9%9D%A2%EF%BC%8820mins%E5%B7%A6%E5%8F%B3%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">三面（20mins左右）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BE%8E%E5%9B%A2%E4%BC%98%E9%80%89-3-29"><span class="nav-number">3.</span> <span class="nav-text">美团优选 3.29</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E9%9D%A2%EF%BC%8840mins%E5%B7%A6%E5%8F%B3%EF%BC%89-2"><span class="nav-number">3.1.</span> <span class="nav-text">一面（40mins左右）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C-1"><span class="nav-number">3.1.1.</span> <span class="nav-text">网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F"><span class="nav-number">3.1.2.</span> <span class="nav-text">系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Android"><span class="nav-number">3.1.3.</span> <span class="nav-text">Android</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%AC%E4%B8%9C"><span class="nav-number">4.</span> <span class="nav-text">京东</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E8%AF%95-%E7%94%B5%E9%9D%A2-4-7%EF%BC%8820mins%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">初试 电面 4.7（20mins）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%85%BE%E8%AE%AF"><span class="nav-number">5.</span> <span class="nav-text">腾讯</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E9%9D%A2-4-12%EF%BC%881h10mins%EF%BC%89"><span class="nav-number">5.1.</span> <span class="nav-text">一面 4.12（1h10mins）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Android-1"><span class="nav-number">5.1.1.</span> <span class="nav-text">Android</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C"><span class="nav-number">5.1.2.</span> <span class="nav-text">计算机网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B-1"><span class="nav-number">5.1.3.</span> <span class="nav-text">多线程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E6%98%93%E6%9C%89%E9%81%93"><span class="nav-number">6.</span> <span class="nav-text">网易有道</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E9%9D%A2-4-12%EF%BC%8840mins%EF%BC%89"><span class="nav-number">6.1.</span> <span class="nav-text">一面 4.12（40mins）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E9%9D%A2-4-25%EF%BC%8825mins%EF%BC%89"><span class="nav-number">6.2.</span> <span class="nav-text">二面 4.25（25mins）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E6%89%8B-%E5%B9%B3%E5%8F%B0%E6%9E%B6%E6%9E%84%E9%83%A8%E9%97%A8"><span class="nav-number">7.</span> <span class="nav-text">快手 平台架构部门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E9%9D%A2-4-13%EF%BC%8850mins%EF%BC%89"><span class="nav-number">7.1.</span> <span class="nav-text">一面 4.13（50mins）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E9%9D%A2-4-15-%EF%BC%8850mins%EF%BC%89"><span class="nav-number">7.2.</span> <span class="nav-text">二面 4.15 （50mins）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8-%E6%94%AF%E4%BB%98%E4%B8%9A%E5%8A%A1%E9%83%A8%E9%97%A8"><span class="nav-number">8.</span> <span class="nav-text">字节跳动 支付业务部门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E9%9D%A2-4-16%EF%BC%881h%EF%BC%89"><span class="nav-number">8.1.</span> <span class="nav-text">一面 4.16（1h）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%94%E6%83%B3-%E6%99%BA%E6%85%A7%E5%AE%B6%E5%B1%85"><span class="nav-number">9.</span> <span class="nav-text">联想 智慧家居</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E9%9D%A2-4-26-%EF%BC%8821mins%EF%BC%89"><span class="nav-number">9.1.</span> <span class="nav-text">一面 4.26 （21mins）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BE%8E%E5%9B%A2-%E9%97%AA%E8%B4%AD%E9%83%A8%E9%97%A8"><span class="nav-number">10.</span> <span class="nav-text">美团 闪购部门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E9%9D%A2-4-29-%EF%BC%8840mins%EF%BC%89"><span class="nav-number">10.1.</span> <span class="nav-text">一面 4.29 （40mins）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">zyflool</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zyflool</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
