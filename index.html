@@ -182,7 +182,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-05-31 13:16:51 / 修改时间：13:18:09" itemprop="dateCreated datePublished" datetime="2022-05-31T13:16:51+08:00">2022-05-31</time>
+              <time title="创建时间：2022-05-31 13:16:51 / 修改时间：13:19:56" itemprop="dateCreated datePublished" datetime="2022-05-31T13:16:51+08:00">2022-05-31</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -207,116 +207,14 @@
       
           <p>在有序序列中查询&#x2F;插入一个元素时的使用算法。</p>
 <p>相较于遍历，使用二分在平均情况下可以将时间复杂度从 O(n) 减少为 O(√n).</p>
-<h2 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h2><p>在有序列中查找某一个元素的位置。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 升序序列</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">halfSearch</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span>[] array)</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> <span class="variable">right</span> <span class="operator">=</span> array.length - <span class="number">1</span>;    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 首先确认目标数严格在区间内</span></span><br><span class="line">    <span class="keyword">if</span> (array[left] &gt; n || array[right] &lt; n) &#123;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 开始二分</span></span><br><span class="line">    <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> (left + right) / <span class="number">2</span>;</span><br><span class="line">        <span class="comment">// 当目标数与该位置上的数不等时则表示下一次的区间范围不会包含此位置</span></span><br><span class="line">        <span class="comment">// 所以二分缩小范围时，在m的基础上进行+/-1来缩小区间。</span></span><br><span class="line">        <span class="keyword">if</span> (array[m] &gt; n) &#123;</span><br><span class="line">            right = m - <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (array[m] &lt; n) &#123;</span><br><span class="line">            left = m + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// 区间中点位置上的数等于目标数时直接返回即可</span></span><br><span class="line">            <span class="keyword">return</span> m;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 范围缩小到一个点时，还需要确认是否是目标数，如果不是则表示目标数不在序列中。</span></span><br><span class="line">    <span class="keyword">if</span> (array[left] == n) &#123;</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>若有序列{0,1,1,2,3,5,6,7,8}, length &#x3D; 9</p>
-<p>若查询-1的位置</p>
-<ol>
-<li>return -1;</li>
-</ol>
-<p>若查询0的位置</p>
-<ol>
-<li>left &#x3D; 0, right &#x3D; 8, m &#x3D; 4;</li>
-<li>left &#x3D; 0, right &#x3D; 3, m &#x3D; 1;</li>
-<li>left &#x3D; 0, right &#x3D; 0 &#x3D;&gt; return 0;</li>
-</ol>
-<p>若查询1的位置</p>
-<ol>
-<li>left &#x3D; 0, right &#x3D; 8, m &#x3D; 4;</li>
-<li>left &#x3D; 0, right &#x3D; 3, m &#x3D; 1 &#x3D;&gt; return 1;</li>
-</ol>
-<p>若查询2的位置</p>
-<ol>
-<li>left &#x3D; 0, right &#x3D; 8, m &#x3D; 4;</li>
-<li>left &#x3D; 0, right &#x3D; 3, m &#x3D; 1;</li>
-<li>left &#x3D; 2, right &#x3D; 3, m &#x3D; 2;</li>
-<li>left &#x3D; 3, right &#x3D; 3 &#x3D;&gt; return 3;</li>
-</ol>
-<p>若查询3的位置</p>
-<ol>
-<li>left &#x3D; 0, right &#x3D; 8, m &#x3D; 4 &#x3D;&gt; return 4;</li>
-</ol>
-<p>若查询4的位置</p>
-<ol>
-<li>left &#x3D; 0, right &#x3D; 8, m &#x3D; 4;</li>
-<li>left &#x3D; 5, right &#x3D; 8, m &#x3D; 6;</li>
-<li>left &#x3D; 5, right &#x3D; 5 &#x3D;&gt; return -1;</li>
-</ol>
-<p>若查询5的位置</p>
-<ol>
-<li>left &#x3D; 0, right &#x3D; 8, m &#x3D; 4;</li>
-<li>left &#x3D; 5, right &#x3D; 8, m &#x3D; 6;</li>
-<li>left &#x3D; 5, right &#x3D; 5 &#x3D;&gt; return 5;</li>
-</ol>
-<p>若查询6的位置</p>
-<ol>
-<li>left &#x3D; 0, right &#x3D; 8, m &#x3D; 4;</li>
-<li>left &#x3D; 5, right &#x3D; 8, m &#x3D; 6 &#x3D;&gt; return 6;</li>
-</ol>
-<p>若查询7的位置</p>
-<ol>
-<li>left &#x3D; 0, right &#x3D; 8, m &#x3D; 4;</li>
-<li>left &#x3D; 5, right &#x3D; 8, m &#x3D; 6;</li>
-<li>left &#x3D; 7, right &#x3D; 8, m &#x3D; 7 &#x3D;&gt; return 7;</li>
-</ol>
-<p>若查询8的位置</p>
-<ol>
-<li>left &#x3D; 0, right &#x3D; 8, m &#x3D; 4;</li>
-<li>left &#x3D; 5, right &#x3D; 8, m &#x3D; 6;</li>
-<li>left &#x3D; 7, right &#x3D; 8, m &#x3D; 7;</li>
-<li>left &#x3D; 8, right &#x3D; 8 &#x3D;&gt; return 8;</li>
-</ol>
-<p>若查询9的位置</p>
-<ol>
-<li>return -1;</li>
-</ol>
-<h2 id="二分插入"><a href="#二分插入" class="headerlink" title="二分插入"></a>二分插入</h2><p>在有序列中查找某一个元素的插入位置。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 升序序列</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getInsertPosition</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span>[] array)</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> <span class="variable">right</span> <span class="operator">=</span> array.length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 首先确认目标数严格在区间内</span></span><br><span class="line">    <span class="keyword">if</span> (array[left] &gt; n) &#123;</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (array[right] &lt; n) &#123;</span><br><span class="line">        <span class="comment">// 由于序列插入时的位置参数为插入后新元素的位置下标</span></span><br><span class="line">        <span class="comment">// 所以当需要将新的元素插入到序列末尾时，位置参数为right+1</span></span><br><span class="line">        <span class="keyword">return</span> right + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 开始二分</span></span><br><span class="line">    <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> (left + right) / <span class="number">2</span>;</span><br><span class="line">        <span class="comment">// 因为当指针元素值大于或小于新元素的值时，并不能保证插入新元素值的位置区间一定不包括此指针的位置</span></span><br><span class="line">        <span class="comment">// 如在区间 &#123;0，6，7，8&#125;中插入4时，插入的位置应为1，array[mid] = array[1] = 6 &gt; 4，</span></span><br><span class="line">        <span class="comment">// 下一步的区间应该是[mid, right]=[1,3]，而不是[mid+1, right] = [2,3]</span></span><br><span class="line">        <span class="comment">// 如在区间 &#123;0，2，3，8，9&#125;中插入4时，插入的位置应为2，array[mid] = array[2] = 3 &lt; 4，</span></span><br><span class="line">        <span class="comment">// 下一步的区间应该是[left, mid]=[1,2]，而不是[left, mid-1] = [1,1]</span></span><br><span class="line">        <span class="comment">// 如在区间</span></span><br><span class="line">        <span class="comment">// 所以在进行区间范围缩小时，不能对mid值进行加减1操作。</span></span><br><span class="line">        <span class="keyword">if</span> (array[mid] &lt; n) &#123;</span><br><span class="line">            <span class="keyword">if</span> (left == mid) &#123;</span><br><span class="line">                <span class="comment">// 当 left == mid 时表示此时 left+1 == right</span></span><br><span class="line">                <span class="comment">// 为了避免进入死循环，所以需要在这里直接判断进行返回</span></span><br><span class="line">                <span class="comment">// 因为这时left位上的元素小于新元素，并且二分区间也保证了right位上的元素一定大于等于目标元素，</span></span><br><span class="line">                <span class="comment">// 即此时: array[left] &lt; n &lt;= array[right]</span></span><br><span class="line">                <span class="comment">// 所以插入的新元素的位置值则为right</span></span><br><span class="line">                <span class="keyword">return</span> right;</span><br><span class="line">            &#125;</span><br><span class="line">            left = mid;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            right = mid;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当范围归拢到一个点则表示在 left + 1 == right 时 array[mid] &gt;= n，即 array[left] &gt;= n，</span></span><br><span class="line">    <span class="comment">// 所以left是序列中第一个大于等于新元素的位置下标，返回left即可.</span></span><br><span class="line">    <span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>有序列：{0,2,3,3,4,5},length &#x3D; 6</p>
-<p>若插入0, 插入位置应为0</p>
-<ol>
-<li>left &#x3D; 0, right &#x3D; 5, m &#x3D; 2;</li>
-<li>left &#x3D; 0, right &#x3D; 2, m &#x3D; 1;</li>
-<li>left &#x3D; 0, right &#x3D; 1, m &#x3D; 0;</li>
-<li>left &#x3D; 0, right &#x3D; 0 &#x3D;&gt; return 0;</li>
-</ol>
-<p>若插入1, 插入位置应为1</p>
-<ol>
-<li>left &#x3D; 0, right &#x3D; 5, m &#x3D; 2;</li>
-<li>left &#x3D; 0, right &#x3D; 2, m &#x3D; 1;</li>
-<li>left &#x3D; 0, right &#x3D; 1, m &#x3D; 0 &#x3D;&gt; return 1;</li>
-</ol>
-<p>若插入2, 插入位置应为1</p>
-<ol>
-<li>left &#x3D; 0, right &#x3D; 5, m &#x3D; 2;</li>
-<li>left &#x3D; 0, right &#x3D; 2, m &#x3D; 1;</li>
-<li>left &#x3D; 0, right &#x3D; 1, m &#x3D; 0 &#x3D;&gt; return 1;</li>
-</ol>
-<p>若插入3, 插入位置应为2</p>
-<ol>
-<li>left &#x3D; 0, right &#x3D; 5, m &#x3D; 2;</li>
-<li>left &#x3D; 0, right &#x3D; 2, m &#x3D; 1;</li>
-<li>left &#x3D; 1, right &#x3D; 2, m &#x3D; 1 &#x3D;&gt; return 2;</li>
-</ol>
-<p>若插入4, 插入位置应为4</p>
-<ol>
-<li>left &#x3D; 0, right &#x3D; 5, m &#x3D; 2;</li>
-<li>left &#x3D; 2, right &#x3D; 5, m &#x3D; 3;</li>
-<li>left &#x3D; 3, right &#x3D; 5, m &#x3D; 4;</li>
-<li>left &#x3D; 3, right &#x3D; 4, m &#x3D; 3 &#x3D;&gt; return 4;</li>
-</ol>
-<p>若插入5, 插入位置应为5</p>
-<ol>
-<li>left &#x3D; 0, right &#x3D; 5, m &#x3D; 2;</li>
-<li>left &#x3D; 2, right &#x3D; 5, m &#x3D; 3;</li>
-<li>left &#x3D; 3, right &#x3D; 5, m &#x3D; 4;</li>
-<li>left &#x3D; 4, right &#x3D; 5, m &#x3D; 4 &#x3D;&gt; return 5;</li>
-</ol>
-<p>若插入6, 插入位置应为6</p>
-<ol>
-<li>return 6;</li>
-</ol>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/31/%E4%BA%8C%E5%88%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
